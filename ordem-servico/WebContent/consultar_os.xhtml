@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/template.xhtml">
+
+	<ui:define name="titulo">
+		Consultar Ordem Serviço
+	</ui:define>
+	
+	<ui:define name="body">
+	<h:form id="formulario">
+		<p:messages autoUpdate="true"/>
+		<p:fieldset legend="Consulta">
+		
+			<p:panelGrid columns="4" styleClass="pesquisa">
+				<p:outputLabel for="numOs" value="Número da OS"/>
+				<p:inputText id="numOs" value="#{ordemServicoMBean.os.numeroOS}" required="true" requiredMessage="O número da OS é obrigatório!"/>
+				
+				<p:outputLabel for="buscaNome" value="Nome Cliente"/>
+				<f:ajax render="tabelaOs" execute="@this" event="keypress">
+					<p:inputText id="buscaNome" valueChangeListener="#{ordemServicoMBean.buscaPorNome}"/>
+				</f:ajax>
+				<p:commandButton value="Procurar" action="#{ordemServicoMBean.find}"/>		
+			</p:panelGrid>
+		
+		</p:fieldset>
+		
+		<p:dataTable id="tabelaOs" var="os" value="#{ordemServicoMBean.ordensServicos}">
+			<p:column headerText="" style="width:8%; text-align: center;">
+				<p:commandLink action="#{ordemServicoMBean.detalhar(os)}" immediate="true" styleClass="ui-icon ui-icon-search icone"/>
+				<p:commandLink action="#{ordemServicoMBean.alterar(os)}" value="Alterar" immediate="true" styleClass="ui-icon ui-icon-pencil icone"/>
+			</p:column>
+			<p:column headerText="Numero OS" style="width:11%; text-align: center;">
+				<h:outputLabel value="#{os.numeroOS}" />
+			</p:column>
+			<p:column headerText="Nome Cliente" style="width:59%;">
+				<h:outputLabel value="#{os.cliente.nome}" />
+			</p:column>
+			<p:column headerText="Celular" style="width:22%;">
+				<h:outputLabel value="#{os.telefone.modelo}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	</ui:define>
+</ui:composition>
+</html>

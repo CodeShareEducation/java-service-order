@@ -1,0 +1,21 @@
+.banner{
+	width: 100%;
+	height: 50px;
+	background-color: #A01010;
+}
+.principal{
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* botoes-primefaces */
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+	background-color: #FFFF81
+}
+
+.pesquisa tr,
+.pesquisa td{
+	border: none !important;
+	vertical-align: middle;
+}

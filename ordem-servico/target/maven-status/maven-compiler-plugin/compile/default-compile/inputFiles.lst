@@ -1,0 +1,11 @@
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/mbean/OrdemServicoMBean.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/dao/ClienteDAO.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/entidade/Telefone.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/dto/OrdemServicoDTO.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/entidade/OrdemServico.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/entidade/Parametro.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/entidade/Cliente.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/dto/TelefoneDTO.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/dto/TipoOrdemServico.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/dto/ClienteDTO.java
+/home/mcqueide/workspace_kepler/wc/ordem-servico/src/main/java/br/com/wc/ordemservico/dto/EstadoTelefone.java
