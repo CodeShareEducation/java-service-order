@@ -9,7 +9,7 @@
 	<application>
 	
 		<resource-bundle>
-			<base-name>br.com.wc.ordemservico.mensagens.Mensagens</base-name>
+			<base-name>br.com.codeshare.serviceorder.mensagens.Mensagens</base-name>
 			<var>msg</var>
 		</resource-bundle>
 		
