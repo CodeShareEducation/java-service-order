@@ -11,3 +11,4 @@ service-order/.settings/org.eclipse.wst.jsdt.ui.superType.container
 service-order/.settings/org.eclipse.wst.jsdt.ui.superType.name
 service-order/.settings/org.eclipse.wst.validation.prefs
 service-order/.settings/org.hibernate.eclipse.console.prefs
+service-order/target/

@@ -1,4 +1,4 @@
-# java-service-order
+# Service Order
 Project to work with service orders from a cel phone store made with: Java, JSF, Hibernate, EJB, Jboss AS 7 and PostgreSQL
 
 ## How to install
@@ -14,8 +14,8 @@ Project to work with service orders from a cel phone store made with: Java, JSF,
 
   ```xml
   <datasources>
-      <datasource jndi-name="java:/ordem-servico" pool-name="ordem-servico" enabled="true" use-java-context="true">
-          <connection-url>jdbc:postgresql://localhost:5432/ordemServico</connection-url>
+      <datasource jndi-name="java:/service-order" pool-name="service-order" enabled="true" use-java-context="true">
+          <connection-url>jdbc:postgresql://localhost:5432/serviceOrder</connection-url>
           <driver>org.postgresql</driver>
           <pool>
               <min-pool-size>10</min-pool-size>
@@ -35,7 +35,7 @@ Project to work with service orders from a cel phone store made with: Java, JSF,
   </datasources>
   ```
 
-3. There is a folder into config `postgresql`, copy its content into {jboss-home}/modules/org/ .
+3. There is a folder into config `postgresql`, copy its content into `{jboss-home}/modules/org/` .
   For instance:
 
   ```
@@ -50,4 +50,4 @@ Project to work with service orders from a cel phone store made with: Java, JSF,
 
 7. Start the server.
 
-8. Open the browser and acess the adress http://localhost:8080/ordem-servico
+8. Open the browser and acess the adress http://localhost:8080/service-order
