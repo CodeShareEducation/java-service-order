@@ -23,7 +23,7 @@ public class OrdemServicoDAO {
 		return manager.find(OrdemServico.class, numOS);
 	}
 
-	public List<OrdemServico> listarTotas() {
+	public List<OrdemServico> listarTodas() {
 		TypedQuery<OrdemServico> query = manager.createNamedQuery(OrdemServico.BUSCAR_TODAS, OrdemServico.class);
 		return query.getResultList();
 	}

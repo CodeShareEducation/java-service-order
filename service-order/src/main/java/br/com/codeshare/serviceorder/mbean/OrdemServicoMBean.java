@@ -12,6 +12,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 
 import lombok.Getter;
+import lombok.Setter;
 import br.com.codeshare.serviceorder.dao.ClienteDAO;
 import br.com.codeshare.serviceorder.dao.OrdemServicoDAO;
 import br.com.codeshare.serviceorder.dao.TelefoneDAO;
@@ -47,6 +48,9 @@ public class OrdemServicoMBean {
 	TelefoneDAO daoTelefone;
 	@Inject
 	OrdemServicoDAO daoOS;
+	@Getter
+	@Setter
+	private String filtroNome;
 	
 	@PostConstruct
 	public void constroiObjetos(){
@@ -56,7 +60,7 @@ public class OrdemServicoMBean {
 		estados = EstadoTelefone.values();
 		tipoOs = TipoOrdemServico.values();
 		estadoOs = EstadoOrdemServico.values();
-		ordensServicos = daoOS.listarTotas();
+		ordensServicos = daoOS.listarTodas();
 	}
 	
 	public String salva(){
@@ -112,12 +116,12 @@ public class OrdemServicoMBean {
 		return "consultar_os";
 	}
 	
-	public void buscaPorNome(ValueChangeEvent event) throws Exception{
+	public void buscaPorNome(){
 		ordensServicos = null;
-		if((String)event.getNewValue() == null){
-			ordensServicos = daoOS.listarTotas();
+		if(filtroNome == null){
+			ordensServicos = daoOS.listarTodas();
 		}
-		ordensServicos = daoOS.listarPorNome((String)event.getNewValue());
+		ordensServicos = daoOS.listarPorNome(filtroNome);
 		
 	}
 }

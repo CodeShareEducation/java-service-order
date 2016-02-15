@@ -1,15 +1,5 @@
 service-order/.classpath
 service-order/.project
-service-order/.settings/.jsdtscope
-service-order/.settings/org.eclipse.jdt.core.prefs
-service-order/.settings/org.eclipse.jpt.core.prefs
-service-order/.settings/org.eclipse.m2e.core.prefs
-service-order/.settings/org.eclipse.wst.common.component
-service-order/.settings/org.eclipse.wst.common.project.facet.core.prefs.xml
-service-order/.settings/org.eclipse.wst.common.project.facet.core.xml
-service-order/.settings/org.eclipse.wst.jsdt.ui.superType.container
-service-order/.settings/org.eclipse.wst.jsdt.ui.superType.name
-service-order/.settings/org.eclipse.wst.validation.prefs
-service-order/.settings/org.hibernate.eclipse.console.prefs
+service-order/.settings/
 service-order/target/
 service-order/src/main/webapp/WEB-INF/.faces-config.xml.jsfdia
