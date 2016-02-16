@@ -1,8 +1,3 @@
-.banner{
-	width: 100%;
-	height: 50px;
-	background-color: #A01010;
-}
 .principal{
 	width: 800px;
 	margin-left: auto;
@@ -18,4 +13,14 @@
 .pesquisa td{
 	border: none !important;
 	vertical-align: middle;
+}
+
+.menu{
+    margin-bottom: 1em;
+}
+
+.detalhaOs label:nth-child(odd){
+	font-weight: bold;
+	display: block;
+	margin: 0.5em 0;
 }

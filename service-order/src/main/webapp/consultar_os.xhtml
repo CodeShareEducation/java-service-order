@@ -14,26 +14,32 @@
 	
 	<ui:define name="body">
 	<h:form id="formulario">
+		<p:growl life="2000" autoUpdate="true"/>
 		<p:messages autoUpdate="true"/>
 		<p:fieldset legend="Consulta">
 		
 			<p:panelGrid columns="4" styleClass="pesquisa">
 				<p:outputLabel for="numOs" value="Número da OS"/>
-				<p:inputText id="numOs" value="#{ordemServicoMBean.os.numeroOS}" required="true" requiredMessage="O número da OS é obrigatório!"/>
+				<p:inputText id="numOs" value="#{ordemServicoMBean.filtroId}">
+					<p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorId}"/>
+				</p:inputText>
 				
 				<p:outputLabel for="buscaNome" value="Nome Cliente"/>
 				<p:inputText id="buscaNome" value="#{ordemServicoMBean.filtroNome}">
 					<p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorNome}"/>
 				</p:inputText>
-				<p:commandButton value="Procurar" action="#{ordemServicoMBean.find}"/>		
 			</p:panelGrid>
 		
 		</p:fieldset>
 		
 		<p:dataTable id="tabelaOs" var="os" value="#{ordemServicoMBean.ordensServicos}">
 			<p:column headerText="" style="width:8%; text-align: center;">
-				<p:commandLink action="#{ordemServicoMBean.detalhar(os)}" immediate="true" styleClass="ui-icon ui-icon-search icone"/>
-				<p:commandLink action="#{ordemServicoMBean.alterar(os)}" value="Alterar" immediate="true" styleClass="ui-icon ui-icon-pencil icone"/>
+				<p:commandLink action="#{ordemServicoMBean.detalhar(os)}" immediate="true">
+					<i class="fa fa-search" />
+				</p:commandLink>
+				<p:commandLink action="#{ordemServicoMBean.alterar(os)}" immediate="true">
+					<i class="fa fa-pencil-square-o" />
+				</p:commandLink>
 			</p:column>
 			<p:column headerText="Numero OS" style="width:11%; text-align: center;">
 				<h:outputLabel value="#{os.numeroOS}" />

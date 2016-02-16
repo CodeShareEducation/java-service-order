@@ -1,5 +1,6 @@
 package br.com.codeshare.serviceorder.mbean;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +52,9 @@ public class OrdemServicoMBean {
 	@Getter
 	@Setter
 	private String filtroNome;
+	@Getter
+	@Setter
+	private Long filtroId;
 	
 	@PostConstruct
 	public void constroiObjetos(){
@@ -74,7 +78,7 @@ public class OrdemServicoMBean {
 		
 		constroiObjetos();
 		FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,"Adicionado com sucesso!","")); 
-		return "nova_ordem_servico";
+		return "consultar_os";
 	}
 	
 	public EstadoTelefone obtemEstadoTelefone(int valor){
@@ -123,5 +127,14 @@ public class OrdemServicoMBean {
 		}
 		ordensServicos = daoOS.listarPorNome(filtroNome);
 		
+	}
+	
+	public void buscaPorId(){
+		ordensServicos = new ArrayList<OrdemServico>();
+		if(filtroId == null || filtroId.equals(0l)){
+			ordensServicos = daoOS.listarTodas();
+			return;
+		}
+		ordensServicos.add(daoOS.find(filtroId));
 	}
 }

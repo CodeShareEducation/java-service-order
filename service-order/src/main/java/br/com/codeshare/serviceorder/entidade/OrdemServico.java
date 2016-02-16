@@ -24,7 +24,7 @@ import br.com.codeshare.serviceorder.dto.TipoOrdemServico;
 
 @NamedQueries(
 		{@NamedQuery(name=OrdemServico.BUSCAR_TODAS,query="select os from OrdemServico os join fetch os.cliente join fetch os.telefone"),
-		@NamedQuery(name=OrdemServico.BUSCAR_POR_CLIENTE,query="select os from OrdemServico os join fetch os.cliente join fetch os.telefone where os.cliente.nome like :nome")}
+		@NamedQuery(name=OrdemServico.BUSCAR_POR_CLIENTE,query="select os from OrdemServico os join fetch os.cliente join fetch os.telefone where lower (os.cliente.nome) like :nome")}
 		)
 @Getter
 @Setter

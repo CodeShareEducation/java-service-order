@@ -30,7 +30,7 @@ public class OrdemServicoDAO {
 	
 	public List<OrdemServico> listarPorNome(String nome) {
 		TypedQuery<OrdemServico> query = manager.createNamedQuery(OrdemServico.BUSCAR_POR_CLIENTE, OrdemServico.class);
-		query.setParameter("nome", "%"+nome+"%");
+		query.setParameter("nome", "%"+nome.toLowerCase()+"%");
 		return query.getResultList();
 	}
 	
@@ -38,5 +38,4 @@ public class OrdemServicoDAO {
 		OrdemServico merge = manager.merge(os);
 		manager.persist(merge);
 	}
-	
 }
