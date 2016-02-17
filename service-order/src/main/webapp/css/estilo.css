@@ -2,6 +2,7 @@
 	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
+	position: relative;
 }
 
 /* botoes-primefaces */
@@ -23,4 +24,25 @@
 	font-weight: bold;
 	display: block;
 	margin: 0.5em 0;
+	width: 25ch;
+}
+
+.detalhaOs div{
+	display: inline-block;	
+}
+.detalhaOs div label{
+	display: block;	
+}
+
+.consulta{
+	margin: 0.5em 0;
+}
+
+.pesquisa td:nth-of-type(odd) {
+	padding-left: 0;
+}
+
+.imprimir{
+	position: absolute;
+	right: 0;
 }

@@ -17,7 +17,7 @@
 		<p:growl life="2000" autoUpdate="true"/>
 		<p:messages autoUpdate="true"/>
 		<p:fieldset legend="Consulta">
-		
+			<p class="consulta">Escolha um dos campos para realizar a pesquisa.</p>
 			<p:panelGrid columns="4" styleClass="pesquisa">
 				<p:outputLabel for="numOs" value="Número da OS"/>
 				<p:inputText id="numOs" value="#{ordemServicoMBean.filtroId}">
@@ -41,7 +41,7 @@
 					<i class="fa fa-pencil-square-o" />
 				</p:commandLink>
 			</p:column>
-			<p:column headerText="Numero OS" style="width:11%; text-align: center;">
+			<p:column headerText="Número OS" style="width:11%; text-align: center;">
 				<h:outputLabel value="#{os.numeroOS}" />
 			</p:column>
 			<p:column headerText="Nome Cliente" style="width:59%;">
