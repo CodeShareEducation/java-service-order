@@ -72,7 +72,7 @@
 				<p:outputLabel value="Valor:"/>
 				<p:outputLabel value="R$ 100.00"/>
 			</div>
-
+			<label />
 			<p:outputLabel value="Problema Relatado:"/>
 			<p:outputLabel value="#{ordemServicoMBean.osSelecionada.problemaRelatado}"/>
 			
@@ -80,12 +80,17 @@
 			<h:outputFormat value="#{msg.mensagem_compromisso}" escape="false">
 				<f:param value="WC"/>
 			</h:outputFormat>
+			<label />
 			
-			<p:outputLabel value="Problema Encontrado:"/>
-			<p:outputLabel value="#{ordemServicoMBean.osSelecionada.problemaEncontrado}"/>
+			<ui:fragment rendered="#{!empty ordemServicoMBean.osSelecionada.problemaEncontrado}">
+				<p:outputLabel value="Problema Encontrado:"/>
+				<p:outputLabel value="#{ordemServicoMBean.osSelecionada.problemaEncontrado}"/>
+			</ui:fragment>
 			
-			<p:outputLabel value="Serviço Executado:"/>
-			<p:outputLabel value="#{ordemServicoMBean.osSelecionada.servicoExecutado}"/>
+			<ui:fragment rendered="#{!empty ordemServicoMBean.osSelecionada.servicoExecutado}">
+				<p:outputLabel value="Serviço Executado:"/>
+				<p:outputLabel value="#{ordemServicoMBean.osSelecionada.servicoExecutado}"/>
+			</ui:fragment>
 			
 		</p:fieldset>
 		

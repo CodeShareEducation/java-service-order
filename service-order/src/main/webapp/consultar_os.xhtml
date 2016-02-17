@@ -32,7 +32,7 @@
 		
 		</p:fieldset>
 		
-		<p:dataTable id="tabelaOs" var="os" value="#{ordemServicoMBean.ordensServicos}">
+		<p:dataTable id="tabelaOs" var="os" value="#{ordemServicoMBean.ordensServicos}" emptyMessage="Não existe registro">
 			<p:column headerText="" style="width:8%; text-align: center;">
 				<p:commandLink action="#{ordemServicoMBean.detalhar(os)}" immediate="true">
 					<i class="fa fa-search" />

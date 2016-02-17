@@ -46,3 +46,18 @@
 	position: absolute;
 	right: 0;
 }
+
+@media print{
+	.menu{display: none;}
+	.imprimir{display: none;}
+}
+
+#formulario\:tabelaOs td[colspan="4"]{
+	text-align: center;
+}
+
+.panelGrid-semBorda tr,
+.panelGrid-semBorda td{
+	border: none !important;
+	vertical-align: middle;
+}

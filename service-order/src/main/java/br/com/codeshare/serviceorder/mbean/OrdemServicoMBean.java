@@ -9,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -135,6 +134,9 @@ public class OrdemServicoMBean {
 			ordensServicos = daoOS.listarTodas();
 			return;
 		}
-		ordensServicos.add(daoOS.find(filtroId));
+		OrdemServico os = daoOS.find(filtroId);
+		if (os != null){
+			ordensServicos.add(os);
+		}
 	}
 }

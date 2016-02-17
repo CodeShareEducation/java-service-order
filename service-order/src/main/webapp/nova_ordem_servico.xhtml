@@ -16,7 +16,7 @@
 	<h:form id="formulario">
 		<p:messages autoUpdate="true"/>
 		<p:fieldset legend="Cliente" styleClass="field_set_50 esq">
-			<p:panelGrid columns="1">
+			<p:panelGrid columns="1" styleClass="panelGrid-semBorda">
 				<p:outputLabel for="nomeCliente" value="Nome"/>
 				<p:inputText id="nomeCliente" value="#{ordemServicoMBean.cliente.nome}"/>
 				
@@ -34,7 +34,7 @@
 		
 		<p:fieldset legend="Telefone" styleClass="field_set_50 dir">
 		
-			<p:panelGrid columns="1">
+			<p:panelGrid columns="1" styleClass="panelGrid-semBorda">
 				<p:outputLabel for="marca" value="Marca"/>
 				<p:inputText id="marca" value="#{ordemServicoMBean.telefone.marca}"/>
 				
@@ -53,7 +53,7 @@
 		</p:fieldset>
 		
 		<p:fieldset legend="Ordem Serviço" styleClass="field_set_50 esq">
-			<p:panelGrid columns="1">
+			<p:panelGrid columns="1" styleClass="panelGrid-semBorda">
 				<p:outputLabel for="tipoOs" value="Tipo da OS"/>
 				<p:selectOneRadio id="tipoOs" value="#{ordemServicoMBean.os.tipoOrdemServico}">
 					<f:selectItems value="#{ordemServicoMBean.tipoOs}" var="os" itemValue="#{os}" itemLabel="#{os.label}"/>
