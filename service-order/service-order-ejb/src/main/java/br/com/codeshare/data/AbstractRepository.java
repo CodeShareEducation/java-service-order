@@ -12,20 +12,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-public class AbstractRepository<T extends Serializable> implements
-		Repository<T> {
+public class AbstractRepository<T extends Serializable> implements Repository<T> {
 
 	@Inject
-	private EntityManager em;
+	protected EntityManager em;
 	@Inject
 	private Logger log;
-	@Inject
-	private Event<T> eventSrc;
 
 	@SuppressWarnings("unchecked")
 	private Class<T> getType() {
-		ParameterizedType type = (ParameterizedType) getClass()
-				.getGenericSuperclass();
+		ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
 		return (Class<T>) (type).getActualTypeArguments()[0];
 	}
 
@@ -33,19 +29,16 @@ public class AbstractRepository<T extends Serializable> implements
 	public void insert(T bean) {
 		log.info("Gravando " + getType());
 		em.persist(bean);
-		eventSrc.fire(bean);
 	}
 
 	@Override
 	public void update(T bean) {
 		bean = em.merge(bean);
-		eventSrc.fire(bean);
 	}
 
 	@Override
 	public void delete(T bean) {
 		em.remove(bean);
-		eventSrc.fire(bean);
 	}
 
 	@Override
@@ -54,7 +47,7 @@ public class AbstractRepository<T extends Serializable> implements
 	}
 
 	@Override
-	public List<T> findAllOrderedByName() {
+	public List<T> findAll() {
 		log.info("Recovering data ...");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<T> criteria = cb.createQuery(getType());

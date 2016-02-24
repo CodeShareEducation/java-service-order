@@ -15,29 +15,20 @@
 		<h:form id="formulario">
 			<p:messages autoUpdate="true"/>
 			<p:fieldset legend="#{label['serviceorder.fieldset.legend']}">
-				<p:panelGrid columns="1" styleClass="panelGrid-semBorda">
+				<p class="query">#{label['serviceorder.choisefield']}</p>
+				<p:panelGrid columns="4" styleClass="search">
+					<p:outputLabel for="numOs" value="#{label['serviceorder.sonumber']}"/>
+					<p:inputText id="numOs" value="#{ordemServicoMBean.filtroId}">
+						<p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorId}"/>
+					</p:inputText>
 					
-					<p:outputLabel for="cliente" value="#{label['serviceorder.client']}"  />
-				        <p:selectOneMenu id="cliente" value="#{newServiceOrder.client}" converter="clientConverter"
-				                         effect="fade" var="c" filter="true" filterMatchMode="startsWith">
-				            <f:selectItems value="#{serviceOrderController.listClient}" var="client" itemLabel="#{client.name}" itemValue="#{client}" />
-				 
-				            <p:column>
-				                <h:outputText value="#{c.name}" />
-				            </p:column>
-				        </p:selectOneMenu>
-					
-					<p:outputLabel for="osType" value="#{label['serviceorder.ostype']}"/>
-					<p:selectOneRadio id="osType" value="#{newServiceOrder.orderServiceType}">
-						<f:selectItems value="#{serviceOrderController.orderTypes}" var="type" itemValue="#{type}" itemLabel="#{label[type.label]}"/>
-					</p:selectOneRadio>
-		
-					<p:outputLabel for="reportedProblem" value="#{label['serviceorder.reportedproblem']}" />
-					<p:inputText id="reportedProblem" value="#{newServiceOrder.reportedProblem}" />
-					
-					<p:commandButton action="#{serviceOrderController.save}" value="#{label['serviceorder.save']}" />
+					<p:outputLabel for="searchName" value="#{label['serviceorder.clientname']}"/>
+					<p:inputText id="searchName" value="#{ordemServicoMBean.filtroNome}">
+						<p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorNome}"/>
+					</p:inputText>
 				</p:panelGrid>
 			</p:fieldset>
+			
 		</h:form>
 	</ui:define>
 </ui:composition>

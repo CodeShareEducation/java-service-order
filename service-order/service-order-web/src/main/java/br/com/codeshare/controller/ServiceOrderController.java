@@ -62,7 +62,6 @@ public class ServiceOrderController {
 	public void initNewServiceOrder() {
 		this.newServiceOrder = new ServiceOrder();
 		orderTypes = ServiceOrderType.values();
-		listClient = clientService.searchAll();
 	}
 
 	private String getRootErrorMessage(Exception e) {
@@ -79,20 +78,20 @@ public class ServiceOrderController {
 		return errorMessage;
 	}
 	
-	public void findClientByName(String nameFilter){
+	public void findClientByName(){
 		listServiceOrder = null;
 		if(filterClient == null){
 			listServiceOrder = serviceOrderService.findAll();
 		}
-		listServiceOrder = serviceOrderService.findClientByName(nameFilter);
+		listServiceOrder = serviceOrderService.findClientByName(filterClient);
 	}
 	
-	public void findBySo(Long number){
+	public void findBySo(){
 		listServiceOrder = new ArrayList<ServiceOrder>();
 		if (filterSo == null || filterSo.equals(0l)){
 			listServiceOrder = serviceOrderService.findAll();
 		}
-		ServiceOrder os = serviceOrderService.find(number);
+		ServiceOrder os = serviceOrderService.find(filterSo);
 		if(os != null){
 			listServiceOrder.add(os);
 		}

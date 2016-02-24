@@ -1,4 +1,4 @@
-.principal{
+.main{
 	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
@@ -10,8 +10,8 @@
 	background-color: #FFFF81
 }
 
-.pesquisa tr,
-.pesquisa td{
+.search tr,
+.search td{
 	border: none !important;
 	vertical-align: middle;
 }
@@ -34,11 +34,11 @@
 	display: block;	
 }
 
-.consulta{
+.query{
 	margin: 0.5em 0;
 }
 
-.pesquisa td:nth-of-type(odd) {
+.search td:nth-of-type(odd) {
 	padding-left: 0;
 }
 
