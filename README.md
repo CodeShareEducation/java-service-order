@@ -1,46 +1,14 @@
 # Service Order
-Project to work with service orders from a cel phone store made with: Java, JSF, Hibernate, EJB, Jboss AS 7 and PostgreSQL
+Project to work with service orders from a cel phone store made with: Java, JSF, CDI, Hibernate, EJB, Jboss and PostgreSQL, and take care with I18N. The languages available are English and Portuguese.
 
 ## How to install
 
 1. What do you need?
 
-  1. Jboss AS 7
-  2. PostgreSQL
+  1. Jboss Wildfly 8.0.1
+  2. PostgreSQL 9.4
 
-2. Copy this text in the `standalone.xml` into the tag <subsystem xmlns="urn:jboss:domain:datasources:1.0">:
-
-  The <user-name> and <password> values are for instance, it depends of the username and password that you chose to your postgres.
-
-  ```xml
-  <datasources>
-      <datasource jndi-name="java:/service-order" pool-name="service-order" enabled="true" use-java-context="true">
-          <connection-url>jdbc:postgresql://localhost:5432/serviceOrder</connection-url>
-          <driver>org.postgresql</driver>
-          <pool>
-              <min-pool-size>10</min-pool-size>
-              <max-pool-size>100</max-pool-size>
-              <prefill>true</prefill>
-          </pool>
-          <security>
-              <user-name>postgres</user-name>
-              <password>postgres</password>
-          </security>
-      </datasource>
-      <drivers>
-          <driver name="org.postgresql" module="org.postgresql">
-              <xa-datasource-class>org.postgresql.Driver</xa-datasource-class>
-          </driver>
-      </drivers>
-  </datasources>
-  ```
-
-3. There is a folder into config `postgresql`, copy its content into `{jboss-home}/modules/org/` .
-  For instance:
-
-  ```
-  cp -R postgresql {jboss-home}/modules/org/
-  ```
+2. First you'll need set the correct username and password of you database to the default value of application (username=postgres, password=postgres), or change them in the service-order-ds.xml file (it's into `service-order/service-order-ear/src/main/application/META-INF`).
 
 4. Import the project to your IDE (Eclipse, Netbeans).
 
@@ -50,4 +18,4 @@ Project to work with service orders from a cel phone store made with: Java, JSF,
 
 7. Start the server.
 
-8. Open the browser and acess the adress http://localhost:8080/service-order
+8. Open the browser and acess the adress http://localhost:8080/service-order-web/
