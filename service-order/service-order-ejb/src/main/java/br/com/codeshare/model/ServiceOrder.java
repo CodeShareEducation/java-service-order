@@ -26,7 +26,7 @@ public class ServiceOrder implements Serializable {
 	@SequenceGenerator(name = "SEQ_OS", sequenceName = "SEQ_OS", initialValue = 1, allocationSize = 1)
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OS")
-	private Long numberOS;
+	private Long id;
 	
 	private String reportedProblem;
 	
@@ -59,11 +59,11 @@ public class ServiceOrder implements Serializable {
 	}
 	
 	public Long getNumberOS() {
-		return numberOS;
+		return id;
 	}
 
 	public void setNumberOS(Long numberOS) {
-		this.numberOS = numberOS;
+		this.id = numberOS;
 	}
 
 	public String getReportedProblem() {

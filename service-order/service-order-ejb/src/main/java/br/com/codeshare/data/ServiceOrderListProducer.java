@@ -31,7 +31,7 @@ public class ServiceOrderListProducer {
 	
 	@PostConstruct
 	public void retrieveAllServiceOrder(){
-		serviceOrders = serviceOrderRepository.findAll();
+		serviceOrders = serviceOrderRepository.findAllOrderedById();
 	}
 	
 }

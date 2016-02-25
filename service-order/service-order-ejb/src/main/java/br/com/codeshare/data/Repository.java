@@ -8,6 +8,7 @@ public interface Repository<T> {
 	void update(T bean);
 	void delete(T bean);
 	T findById(Long id);
-	List<T> findAll();
+	List<T> findAllOrderedByName();
+	List<T> findAllOrderedById();
 	
 }

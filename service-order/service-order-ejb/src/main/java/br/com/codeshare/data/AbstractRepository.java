@@ -47,12 +47,22 @@ public class AbstractRepository<T extends Serializable> implements Repository<T>
 	}
 
 	@Override
-	public List<T> findAll() {
+	public List<T> findAllOrderedByName() {
 		log.info("Recovering data ...");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<T> criteria = cb.createQuery(getType());
 		Root<T> root = criteria.from(getType());
-		criteria.select(root).orderBy(cb.asc(root.get("nome")));
+		criteria.select(root).orderBy(cb.asc(root.get("name")));
+		return em.createQuery(criteria).getResultList();
+	}
+	
+	@Override
+	public List<T> findAllOrderedById() {
+		log.info("Recovering data ...");
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<T> criteria = cb.createQuery(getType());
+		Root<T> root = criteria.from(getType());
+		criteria.select(root).orderBy(cb.asc(root.get("id")));
 		return em.createQuery(criteria).getResultList();
 	}
 

@@ -31,7 +31,7 @@ public class ClientListProducer {
 	
 	@PostConstruct
 	public void retrieveAllClientsOrderedByName(){
-		clients = clientRepository.findAll();
+		clients = clientRepository.findAllOrderedByName();
 	}
 	
 }

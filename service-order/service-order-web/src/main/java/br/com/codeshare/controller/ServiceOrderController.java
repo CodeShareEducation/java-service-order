@@ -126,7 +126,7 @@ public class ServiceOrderController {
 	}
 
 	public List<Client> getListClient() {
-		return listClient;
+		return clientService.findAll();
 	}
 	
 }

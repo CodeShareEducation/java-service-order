@@ -19,12 +19,12 @@
 				<p:panelGrid columns="4" styleClass="search">
 					<p:outputLabel for="numOs" value="#{label['serviceorder.sonumber']}"/>
 					<p:inputText id="numOs" value="#{ordemServicoMBean.filtroId}">
-						<p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorId}"/>
+						<!-- <p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorId}"/> -->
 					</p:inputText>
 					
 					<p:outputLabel for="searchName" value="#{label['serviceorder.clientname']}"/>
 					<p:inputText id="searchName" value="#{ordemServicoMBean.filtroNome}">
-						<p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorNome}"/>
+						<!-- <p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorNome}"/> -->
 					</p:inputText>
 				</p:panelGrid>
 			</p:fieldset>

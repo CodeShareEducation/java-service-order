@@ -24,7 +24,7 @@ public class ServiceOrderService {
     }
 
     public List<ServiceOrder> findAll(){
-    	return soRepository.findAll();
+    	return soRepository.findAllOrderedById();
     }
     
     public ServiceOrder find(Long id){
