@@ -31,7 +31,7 @@ public class Client implements Serializable{
 	@OneToMany(mappedBy="client")
 	private List<ServiceOrder> ordemServicos;
 	@OneToMany(mappedBy="client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Phone> telefones;
+	private List<Phone> phones;
 	
 	public Client() {
 	}
@@ -72,10 +72,10 @@ public class Client implements Serializable{
 	public void setOrdemServicos(List<ServiceOrder> ordemServicos) {
 		this.ordemServicos = ordemServicos;
 	}
-	public List<Phone> getTelefones() {
-		return telefones;
+	public List<Phone> getPhones() {
+		return phones;
 	}
-	public void setTelefones(List<Phone> telefones) {
-		this.telefones = telefones;
+	public void setTelefones(List<Phone> phones) {
+		this.phones = phones;
 	}
 }

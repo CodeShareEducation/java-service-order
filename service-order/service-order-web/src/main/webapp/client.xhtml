@@ -11,7 +11,7 @@
 	</ui:define>
 
 	<ui:define name="body">
-		<h:form id="formulario">
+		<h:form id="form">
 			<p:messages />
 			<p:fieldset legend="#{label['client.fieldset.client']}">
 				<p:panelGrid columns="1" styleClass="panelGrid-semBorda">
@@ -29,7 +29,7 @@
 				</p:panelGrid>
 			</p:fieldset>
 			<p:fieldset legend="#{label['client.fieldset.phone']}">
-				<p:panelGrid id="telefone" columns="1" styleClass="panelGrid-semBorda">
+				<p:panelGrid id="phone" columns="1" styleClass="panelGrid-semBorda">
 					<p:outputLabel for="brand" value="#{label['phone.brand']}" />
 					<p:inputText id="brand" value="#{newPhone.brand}" />
 
@@ -46,7 +46,7 @@
 				</p:panelGrid>
 				<p:commandButton value="Gravar" action="#{clientController.addClientPhone}" update="phoneTable @form"/>
 				
-				<p:dataTable value="#{newClient.telefones}" var="phone" emptyMessage="#{label['phone.notadd']}"
+				<p:dataTable value="#{newClient.phones}" var="phone" emptyMessage="#{label['phone.notadd']}"
 					id="phoneTable">
 					<p:column headerText="#{label['phone.brand']}">
 						<p:outputLabel value="#{phone.brand}"/>

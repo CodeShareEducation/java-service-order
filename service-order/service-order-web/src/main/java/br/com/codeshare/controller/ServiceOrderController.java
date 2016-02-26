@@ -14,8 +14,10 @@ import javax.inject.Named;
 
 import br.com.codeshare.enums.ServiceOrderType;
 import br.com.codeshare.model.Client;
+import br.com.codeshare.model.Phone;
 import br.com.codeshare.model.ServiceOrder;
 import br.com.codeshare.service.ClientService;
+import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.service.ServiceOrderService;
 
 @Model
@@ -28,6 +30,8 @@ public class ServiceOrderController {
 	private ServiceOrderService serviceOrderService;
 	@Inject
 	private ClientService clientService;
+	@Inject
+	private PhoneService phoneService;
 
 	private ServiceOrder newServiceOrder;
 	private String filterClient;
@@ -95,6 +99,10 @@ public class ServiceOrderController {
 		if(os != null){
 			listServiceOrder.add(os);
 		}
+	}
+	
+	public List<Phone> recoverClientPhones(){
+		return phoneService.recoverClientPhones(newServiceOrder.getClient().getId());
 	}
 	
 	public String getFilterClient() {

@@ -75,10 +75,10 @@ public class ClientController implements Serializable {
 
 	public void addClientPhone() {
 		phoneController.getNewPhone().setClient(newClient);
-		if (newClient.getTelefones() == null) {
+		if (newClient.getPhones() == null) {
 			newClient.setTelefones(new ArrayList<Phone>());
 		}
-		newClient.getTelefones().add(phoneController.getNewPhone());
+		newClient.getPhones().add(phoneController.getNewPhone());
 		phoneController.initNewPhone();
 	}
 }
