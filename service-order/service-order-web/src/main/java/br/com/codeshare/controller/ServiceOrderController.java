@@ -1,14 +1,15 @@
 package br.com.codeshare.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,8 +21,11 @@ import br.com.codeshare.service.ClientService;
 import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.service.ServiceOrderService;
 
-@Model
-public class ServiceOrderController {
+@Named
+@ViewScoped
+public class ServiceOrderController implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private FacesContext facesContext;
@@ -40,24 +44,22 @@ public class ServiceOrderController {
 	@ManagedProperty("#{listClientMP}")
 	private List<Client> listClient;
 	private ServiceOrderType[] orderTypes;
+	private List<Phone> phones;
 
 	@Produces
 	@Named
 	public ServiceOrder getNewServiceOrder() {
 		return newServiceOrder;
 	}
-
+	
 	public void save() throws Exception {
 		try {
 			serviceOrderService.register(newServiceOrder);
-			facesContext.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_INFO, "Registered!",
-					"Registration successful"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
 			initNewServiceOrder();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					errorMessage, "Registration Unsuccessful");
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
 			facesContext.addMessage(null, m);
 		}
 	}
@@ -66,6 +68,7 @@ public class ServiceOrderController {
 	public void initNewServiceOrder() {
 		this.newServiceOrder = new ServiceOrder();
 		orderTypes = ServiceOrderType.values();
+		listClient = clientService.findAll();
 	}
 
 	private String getRootErrorMessage(Exception e) {
@@ -81,30 +84,30 @@ public class ServiceOrderController {
 		}
 		return errorMessage;
 	}
-	
-	public void findClientByName(){
+
+	public void findClientByName() {
 		listServiceOrder = null;
-		if(filterClient == null){
+		if (filterClient == null) {
 			listServiceOrder = serviceOrderService.findAll();
 		}
 		listServiceOrder = serviceOrderService.findClientByName(filterClient);
 	}
-	
-	public void findBySo(){
+
+	public void findBySo() {
 		listServiceOrder = new ArrayList<ServiceOrder>();
-		if (filterSo == null || filterSo.equals(0l)){
+		if (filterSo == null || filterSo.equals(0l)) {
 			listServiceOrder = serviceOrderService.findAll();
 		}
 		ServiceOrder os = serviceOrderService.find(filterSo);
-		if(os != null){
+		if (os != null) {
 			listServiceOrder.add(os);
 		}
 	}
-	
-	public List<Phone> recoverClientPhones(){
+
+	public List<Phone> recoverClientPhones() {
 		return phoneService.recoverClientPhones(newServiceOrder.getClient().getId());
 	}
-	
+
 	public String getFilterClient() {
 		return filterClient;
 	}
@@ -128,13 +131,27 @@ public class ServiceOrderController {
 	public void setListServiceOrder(List<ServiceOrder> listServiceOrder) {
 		this.listServiceOrder = listServiceOrder;
 	}
-	
-	public ServiceOrderType[] getOrderTypes(){
+
+	public ServiceOrderType[] getOrderTypes() {
 		return orderTypes;
 	}
 
 	public List<Client> getListClient() {
-		return clientService.findAll();
+		return listClient;
+	}
+
+	public void onClientChange(){
+		if(newServiceOrder !=null && !newServiceOrder.equals(""))
+            phones = phoneService.recoverClientPhones(newServiceOrder.getClient().getId());
+        else
+            phones = new ArrayList<Phone>();
 	}
 	
+	public List<Phone> getPhones() {
+		return phones;
+	}
+	
+	public void setPhones(List<Phone> phones) {
+		this.phones = phones;
+	}
 }

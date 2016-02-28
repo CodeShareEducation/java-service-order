@@ -52,8 +52,8 @@
 	.imprimir{display: none;}
 }
 
-#formulario\:tabelaOs td[colspan="4"],
-#formulario\:phoneTable td[colspan="2"]{
+#form\:tabelaOs td[colspan="4"],
+#form\:phoneTable td[colspan="2"]{
 	text-align: center;
 }
 
@@ -61,4 +61,11 @@
 .panelGrid-semBorda td{
 	border: none !important;
 	vertical-align: middle;
+}
+
+.menu_languages{
+	position: absolute;
+	display: inline-block;
+	right: 10px;
+	top: 10px;
 }

@@ -16,6 +16,12 @@
 				<p:menuitem value="#{label['menu.client.new']}" url="/client.jsf"></p:menuitem>
 			</p:submenu>
 		</p:menubar>
+		<h:form class="menu_languages">
+			<p:selectOneMenu value="#{language.localeCode}" onchange="submit()"
+				valueChangeListener="#{language.countryLocaleCodeChanged}">
+	   			<f:selectItems value="#{language.countriesInMap}" /> 
+	   		</p:selectOneMenu>
+   		</h:form>
 	</ui:composition>
      
 </html>

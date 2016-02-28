@@ -1,34 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" 
-	template="/template.xhtml">
-	
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
+
 	<ui:define name="titulo">
 		#{label['serviceorder.title']}
 	</ui:define>
 
 	<ui:define name="body">
-		<h:form id="formulario">
-			<p:messages autoUpdate="true"/>
+		<h:form id="form">
+			<p:messages autoUpdate="true" />
 			<p:fieldset legend="#{label['serviceorder.fieldset.legend']}">
 				<p class="query">#{label['serviceorder.choisefield']}</p>
 				<p:panelGrid columns="4" styleClass="search">
-					<p:outputLabel for="numOs" value="#{label['serviceorder.sonumber']}"/>
+					<p:outputLabel for="numOs" value="#{label['serviceorder.sonumber']}" />
 					<p:inputText id="numOs" value="#{ordemServicoMBean.filtroId}">
 						<!-- <p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorId}"/> -->
 					</p:inputText>
-					
-					<p:outputLabel for="searchName" value="#{label['serviceorder.clientname']}"/>
+
+					<p:outputLabel for="searchName" value="#{label['serviceorder.clientname']}" />
 					<p:inputText id="searchName" value="#{ordemServicoMBean.filtroNome}">
 						<!-- <p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorNome}"/> -->
 					</p:inputText>
 				</p:panelGrid>
 			</p:fieldset>
-			
+
 		</h:form>
 	</ui:define>
 </ui:composition>

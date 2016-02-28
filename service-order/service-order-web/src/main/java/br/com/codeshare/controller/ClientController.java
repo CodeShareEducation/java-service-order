@@ -2,8 +2,6 @@ package br.com.codeshare.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
