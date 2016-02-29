@@ -1,13 +1,12 @@
 package br.com.codeshare.util;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
@@ -16,21 +15,24 @@ public class Language implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	private FacesContext facesContext;
+
 	private String localeCode;
+	private Locale locale;
 
-	private static Map<String, Object> countries;
-	static {
-		countries = new LinkedHashMap<String, Object>();
-		countries.put("English", Locale.ENGLISH); // label, value
-		countries.put("Portuguese", new Locale("pt"));
-	}
-
-	public Map<String, Object> getCountriesInMap() {
-		return countries;
+	@PostConstruct
+	private void init() {
+		locale = facesContext.getExternalContext().getRequestLocale();
 	}
 
 	public String getLocaleCode() {
 		return localeCode;
+	}
+	
+	public String getLanguage()
+	{
+		return locale.getLanguage();
 	}
 
 	public void setLocaleCode(String localeCode) {
@@ -38,18 +40,8 @@ public class Language implements Serializable {
 	}
 
 	// value change event listener
-	public void countryLocaleCodeChanged(ValueChangeEvent e) {
-
-		String newLocaleValue = e.getNewValue().toString();
-
-		// loop country map to compare the locale code
-		for (Map.Entry<String, Object> entry : countries.entrySet()) {
-
-			if (entry.getValue().toString().equals(newLocaleValue)) {
-
-				FacesContext.getCurrentInstance().getViewRoot()
-						.setLocale((Locale) entry.getValue());
-			}
-		}
+	public void countryLocaleCodeChanged() {
+		locale = new Locale(localeCode);
+		facesContext.getViewRoot().setLocale(locale);
 	}
 }

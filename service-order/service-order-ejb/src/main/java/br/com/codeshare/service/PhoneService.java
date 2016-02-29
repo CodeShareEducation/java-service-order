@@ -32,7 +32,7 @@ public class PhoneService {
 		phoneEvent.fire(phone);
 	}
 	
-	public List<Phone> recoverClientPhones(Integer clientId){
+	public List<Phone> recoverClientPhones(Long clientId){
 		log.info("Recovering phones");
 		return phoneRepository.findClientPhone(clientId);
 	}

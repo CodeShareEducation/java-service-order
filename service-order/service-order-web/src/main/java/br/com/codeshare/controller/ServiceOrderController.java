@@ -7,17 +7,14 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.codeshare.enums.ServiceOrderType;
-import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.model.ServiceOrder;
-import br.com.codeshare.service.ClientService;
 import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.service.ServiceOrderService;
 
@@ -33,16 +30,12 @@ public class ServiceOrderController implements Serializable{
 	@Inject
 	private ServiceOrderService serviceOrderService;
 	@Inject
-	private ClientService clientService;
-	@Inject
 	private PhoneService phoneService;
 
 	private ServiceOrder newServiceOrder;
 	private String filterClient;
 	private Long filterSo;
 	private List<ServiceOrder> listServiceOrder;
-	@ManagedProperty("#{listClientMP}")
-	private List<Client> listClient;
 	private ServiceOrderType[] orderTypes;
 	private List<Phone> phones;
 
@@ -68,7 +61,6 @@ public class ServiceOrderController implements Serializable{
 	public void initNewServiceOrder() {
 		this.newServiceOrder = new ServiceOrder();
 		orderTypes = ServiceOrderType.values();
-		listClient = clientService.findAll();
 	}
 
 	private String getRootErrorMessage(Exception e) {
@@ -104,10 +96,6 @@ public class ServiceOrderController implements Serializable{
 		}
 	}
 
-	public List<Phone> recoverClientPhones() {
-		return phoneService.recoverClientPhones(newServiceOrder.getClient().getId());
-	}
-
 	public String getFilterClient() {
 		return filterClient;
 	}
@@ -134,10 +122,6 @@ public class ServiceOrderController implements Serializable{
 
 	public ServiceOrderType[] getOrderTypes() {
 		return orderTypes;
-	}
-
-	public List<Client> getListClient() {
-		return listClient;
 	}
 
 	public void onClientChange(){

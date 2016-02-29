@@ -10,7 +10,8 @@
 		creating @Named managed beans. -->
 	<application>
 		<locale-config>
-			<default-locale>pt</default-locale>
+			<supported-locale>pt</supported-locale>
+			<supported-locale>en</supported-locale>
 		</locale-config>
 		<resource-bundle>
 			<base-name>br.com.codeshare.messages.labels</base-name>

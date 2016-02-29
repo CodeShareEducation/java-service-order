@@ -17,9 +17,10 @@
 			</p:submenu>
 		</p:menubar>
 		<h:form class="menu_languages">
-			<p:selectOneMenu value="#{language.localeCode}" onchange="submit()"
-				valueChangeListener="#{language.countryLocaleCodeChanged}">
-	   			<f:selectItems value="#{language.countriesInMap}" /> 
+			<p:selectOneMenu value="#{language.localeCode}">
+	   			<f:selectItem itemLabel="Português" itemValue="pt" />
+	   			<f:selectItem itemLabel="English" itemValue="en" />
+	   			<p:ajax listener="#{language.countryLocaleCodeChanged}" update="@all" />	   				   	
 	   		</p:selectOneMenu>
    		</h:form>
 	</ui:composition>

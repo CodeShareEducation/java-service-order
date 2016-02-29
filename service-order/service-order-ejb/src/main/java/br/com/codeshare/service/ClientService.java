@@ -22,6 +22,11 @@ public class ClientService{
 		clientEventSrc.fire(client);
 	}
 	
+	public Client findById(Long id)
+	{
+		return clientRepository.findById(id);
+	}
+	
 	public List<Client> findAll(){
 		return clientRepository.findAllOrderedByName();
 	}

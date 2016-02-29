@@ -10,7 +10,7 @@ import br.com.codeshare.model.Phone;
 @RequestScoped
 public class PhoneRepository extends AbstractRepository<Phone>{
 	
-	public List<Phone> findClientPhone(Integer clientId) {
+	public List<Phone> findClientPhone(Long clientId) {
 		TypedQuery<Phone> query = 
 				em.createQuery("from Phone phone where phone.client.id = :clientId",Phone.class);
 		query.setParameter("clientId", clientId);

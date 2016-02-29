@@ -21,7 +21,7 @@ public class Client implements Serializable{
 	@SequenceGenerator(name="SEQ_CLIENT",sequenceName="SEQ_CLIENT",initialValue=1,allocationSize=1)
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_CLIENT")
 	@Column(name="cliente_id")
-	private int id;
+	private Long id;
 	private String name;
 	private String adress;
 	@Column(name="home_phone")
@@ -36,10 +36,10 @@ public class Client implements Serializable{
 	public Client() {
 	}
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
