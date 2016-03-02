@@ -1,6 +1,5 @@
 package br.com.codeshare.convert;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -12,8 +11,7 @@ import javax.inject.Named;
 import br.com.codeshare.model.Client;
 import br.com.codeshare.service.ClientService;
 
-@Named("clientConverter")
-@ApplicationScoped
+@Named
 public class ClientConverter implements Converter {
 
 	

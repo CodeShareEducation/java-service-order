@@ -13,16 +13,16 @@
 			<p:fieldset legend="#{label['new-serviceorder.fieldset.legend']}">
 				<p:panelGrid columns="1" styleClass="panelGrid-semBorda">
 					<p:outputLabel for="client" value="#{label['new-serviceorder.client']}" />
-					<p:selectOneMenu id="client" value="#{newServiceOrder.client}" converter="#{clientConverter}" effect="fade" var="c" filter="true" 
-						filterMatchMode="startsWith">
+					<p:selectOneMenu id="client" value="#{newServiceOrder.client}" converter="#{clientConverter}" 
+						effect="fade" var="c" filter="true" filterMatchMode="startsWith">
 						<p:ajax listener="#{serviceOrderController.onClientChange}" update="phone" />
-						<f:selectItems value="#{clients}" var="client" itemLabel="#{client.name}"/>
+						<f:selectItems value="#{clients}" var="client" itemLabel="#{client.name}" itemValue="#{client}"/>
 						<p:column>
 							<h:outputText value="#{c.name}" />
 						</p:column>
 					</p:selectOneMenu>
-
-					<p:outputLabel for="phone" values="Phones" />
+					
+					<p:outputLabel for="phone" value="#{label['new-serviceorder.phone']}" />
 					<p:selectOneMenu id="phone" value="#{newServiceOrder.phone}">
 						<f:selectItems value="#{serviceOrderController.phones}" var="phone" itemLabel="#{phone.model}" itemValue="#{phone}" />
 					</p:selectOneMenu>
