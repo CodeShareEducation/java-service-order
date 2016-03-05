@@ -23,7 +23,7 @@
 					</p:selectOneMenu>
 					
 					<p:outputLabel for="phone" value="#{label['new-serviceorder.phone']}" />
-					<p:selectOneMenu id="phone" value="#{newServiceOrder.phone}">
+					<p:selectOneMenu id="phone" value="#{newServiceOrder.phone}" converter="#{phoneConverter}">
 						<f:selectItems value="#{serviceOrderController.phones}" var="phone" itemLabel="#{phone.model}" itemValue="#{phone}" />
 					</p:selectOneMenu>
 					<p:outputLabel for="osType" value="#{label['new-serviceorder.ostype']}" />

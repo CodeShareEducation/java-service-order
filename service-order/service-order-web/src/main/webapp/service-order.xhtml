@@ -14,17 +14,36 @@
 				<p class="query">#{label['serviceorder.choisefield']}</p>
 				<p:panelGrid columns="4" styleClass="search">
 					<p:outputLabel for="numOs" value="#{label['serviceorder.sonumber']}" />
-					<p:inputText id="numOs" value="#{ordemServicoMBean.filtroId}">
-						<!-- <p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorId}"/> -->
+					<p:inputText id="numOs" value="#{serviceOrderController.filterSo}">
+						<p:ajax update="tableOs" event="keyup" listener="#{serviceOrderController.searchById}"/>
 					</p:inputText>
 
 					<p:outputLabel for="searchName" value="#{label['serviceorder.clientname']}" />
-					<p:inputText id="searchName" value="#{ordemServicoMBean.filtroNome}">
-						<!-- <p:ajax update="tabelaOs" event="keyup" listener="#{ordemServicoMBean.buscaPorNome}"/> -->
+					<p:inputText id="searchName" value="#{serviceOrderController.filterClient}">
+						<p:ajax update="tableOs" event="keyup" listener="#{serviceOrderController.searchByName}"/>
 					</p:inputText>
 				</p:panelGrid>
 			</p:fieldset>
 
+			<p:dataTable id="tableOs" var="so" value="#{serviceOrderController.listServiceOrder}" emptyMessage="Não existe registro">
+				<p:column headerText="" style="width:8%; text-align: center;">
+					<p:commandLink action="#{serviceOrderController.detail(os)}" immediate="true">
+						<i class="fa fa-search" />
+					</p:commandLink>
+					<p:commandLink action="#{serviceOrderController.update(os)}" immediate="true">
+						<i class="fa fa-pencil-square-o" />
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="Número OS" style="width:11%; text-align: center;">
+					<h:outputLabel value="#{so.id}" />
+				</p:column>
+				<p:column headerText="Nome Cliente" style="width:59%;">
+					<h:outputLabel value="#{so.client.name}" />
+				</p:column>
+				<p:column headerText="Celular" style="width:22%;">
+					<h:outputLabel value="#{so.phone.model}" />
+				</p:column>
+			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

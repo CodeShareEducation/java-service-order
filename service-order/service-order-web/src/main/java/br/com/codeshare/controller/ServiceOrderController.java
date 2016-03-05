@@ -39,6 +39,8 @@ public class ServiceOrderController implements Serializable{
 	private ServiceOrderType[] orderTypes;
 	private List<Phone> phones;
 
+	private ServiceOrder soSelected;
+
 	@Produces
 	@Named
 	public ServiceOrder getNewServiceOrder() {
@@ -137,5 +139,40 @@ public class ServiceOrderController implements Serializable{
 	
 	public void setPhones(List<Phone> phones) {
 		this.phones = phones;
+	}
+	
+	public String detail(ServiceOrder so){
+		this.soSelected = so;
+		return "detail_os";
+	}
+	
+	public String update(ServiceOrder so){
+		this.soSelected = so;
+		return "update_os";
+	}
+	
+	public ServiceOrder getSoSelected() {
+		return soSelected;
+	}
+	
+	public void searchByName(){
+		listServiceOrder = null;
+		if(filterClient == null){
+			listServiceOrder = serviceOrderService.findAll();
+		}
+		listServiceOrder = serviceOrderService.findClientByName(filterClient);
+		
+	}
+	
+	public void searchById(){
+		listServiceOrder = new ArrayList<ServiceOrder>();
+		if(filterSo == null || filterSo.equals(0l)){
+			listServiceOrder = serviceOrderService.findAll();
+			return;
+		}
+		ServiceOrder os = serviceOrderService.find(filterSo);
+		if (os != null){
+			listServiceOrder.add(os);
+		}
 	}
 }

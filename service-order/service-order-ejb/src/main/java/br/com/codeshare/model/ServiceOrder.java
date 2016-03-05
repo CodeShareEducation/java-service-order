@@ -58,12 +58,12 @@ public class ServiceOrder implements Serializable {
 	public ServiceOrder() {
 	}
 	
-	public Long getNumberOS() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setNumberOS(Long numberOS) {
-		this.id = numberOS;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getReportedProblem() {
