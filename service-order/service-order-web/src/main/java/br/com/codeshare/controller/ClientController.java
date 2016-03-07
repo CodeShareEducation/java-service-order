@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -16,7 +17,7 @@ import br.com.codeshare.model.Phone;
 import br.com.codeshare.service.ClientService;
 
 @Named
-@ViewScoped
+@ConversationScoped
 public class ClientController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,6 +32,9 @@ public class ClientController implements Serializable {
 
 	@Inject
 	private PhoneController phoneController;
+	
+	@Inject
+	private Conversation conversation;
 
 	@Produces
 	@Named
@@ -43,6 +47,9 @@ public class ClientController implements Serializable {
 			clientService.save(newClient);
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!","Registration successful"));
 			initNewClient();
+			if(!conversation.isTransient()){
+				conversation.end();
+			}
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
 			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,errorMessage, "Registration Unsuccessful");
@@ -72,6 +79,10 @@ public class ClientController implements Serializable {
 	}
 
 	public void addClientPhone() {
+		if(conversation.isTransient()){
+			conversation.begin();
+		}
+		
 		phoneController.getNewPhone().setClient(newClient);
 		if (newClient.getPhones() == null) {
 			newClient.setTelefones(new ArrayList<Phone>());

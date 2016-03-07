@@ -17,6 +17,10 @@
 			<base-name>br.com.codeshare.messages.labels</base-name>
 			<var>label</var>
 		</resource-bundle>
+		<resource-bundle>
+			<base-name>br.com.codeshare.messages.messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
 	</application>
-
+	
 </faces-config>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.Conversation;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -31,6 +32,9 @@ public class ServiceOrderController implements Serializable{
 	private ServiceOrderService serviceOrderService;
 	@Inject
 	private PhoneService phoneService;
+	
+	@Inject
+	private Conversation conversation;
 
 	private ServiceOrder newServiceOrder;
 	private String filterClient;
@@ -52,6 +56,10 @@ public class ServiceOrderController implements Serializable{
 			serviceOrderService.register(newServiceOrder);
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
 			initNewServiceOrder();
+			
+			/*if(!conversation.isTransient()){
+				conversation.end();
+			}*/
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
 			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
@@ -63,6 +71,7 @@ public class ServiceOrderController implements Serializable{
 	public void initNewServiceOrder() {
 		this.newServiceOrder = new ServiceOrder();
 		orderTypes = ServiceOrderType.values();
+		listServiceOrder = serviceOrderService.findAll();
 	}
 
 	private String getRootErrorMessage(Exception e) {
@@ -118,15 +127,15 @@ public class ServiceOrderController implements Serializable{
 		return listServiceOrder;
 	}
 
-	public void setListServiceOrder(List<ServiceOrder> listServiceOrder) {
-		this.listServiceOrder = listServiceOrder;
-	}
-
 	public ServiceOrderType[] getOrderTypes() {
 		return orderTypes;
 	}
 
 	public void onClientChange(){
+		/*if(conversation.isTransient()){
+			conversation.begin();
+		}*/
+		
 		if(newServiceOrder !=null && !newServiceOrder.equals(""))
             phones = phoneService.recoverClientPhones(newServiceOrder.getClient().getId());
         else

@@ -3,7 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
 
-	<ui:define name="titulo">
+	<ui:define name="title">
 		#{label['serviceorder.title']}
 	</ui:define>
 
@@ -27,10 +27,10 @@
 
 			<p:dataTable id="tableOs" var="so" value="#{serviceOrderController.listServiceOrder}" emptyMessage="Não existe registro">
 				<p:column headerText="" style="width:8%; text-align: center;">
-					<p:commandLink action="#{serviceOrderController.detail(os)}" immediate="true">
+					<p:commandLink action="#{serviceOrderController.detail(so)}" immediate="true">
 						<i class="fa fa-search" />
 					</p:commandLink>
-					<p:commandLink action="#{serviceOrderController.update(os)}" immediate="true">
+					<p:commandLink action="#{serviceOrderController.update(so)}" immediate="true">
 						<i class="fa fa-pencil-square-o" />
 					</p:commandLink>
 				</p:column>

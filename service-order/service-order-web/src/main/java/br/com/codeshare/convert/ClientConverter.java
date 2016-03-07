@@ -14,7 +14,6 @@ import br.com.codeshare.service.ClientService;
 @Named
 public class ClientConverter implements Converter {
 
-	
 	@Inject
 	private ClientService clientService;
 	

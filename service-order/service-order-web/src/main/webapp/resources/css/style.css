@@ -52,7 +52,7 @@
 	.imprimir{display: none;}
 }
 
-#form\:tabelaOs td[colspan="4"],
+#form\:tableOs td[colspan="4"],
 #form\:phoneTable td[colspan="2"]{
 	text-align: center;
 }
