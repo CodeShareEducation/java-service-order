@@ -13,7 +13,6 @@
 	
 	<ui:define name="body">
 	<h:form id="form">
-	
 		<a href="#" onclick="window.print();" class="imprimir">
 			<i class="fa fa-print"/>
 		</a>
@@ -48,7 +47,7 @@
 			
 			<div>
 				<p:outputLabel value="#{label['detail.serviceorder.phonestate']}" styleClass="itens_detalhamento_titulo"/>
-				<p:outputLabel value="#{label['serviceOrderController.soSelected.phone.state.label']}"/>
+				<p:outputLabel value="#{label[serviceOrderController.soSelected.phone.state.label]}"/>
 			</div>
 			
 			<br />
@@ -66,7 +65,7 @@
 			</div>
 			<div>
 				<p:outputLabel value="#{label['detail.serviceorder.sotype']}" styleClass="itens_detalhamento_titulo"/>
-				<p:outputLabel value="#{serviceOrderController.soSelected.orderServiceType.label}"/>
+				<p:outputLabel value="#{label[serviceOrderController.soSelected.orderServiceType.label]}"/>
 			</div>
 			<div>
 				<p:outputLabel value="#{label['detail.serviceorder.value']}"/>

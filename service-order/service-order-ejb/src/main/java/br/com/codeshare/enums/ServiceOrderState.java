@@ -7,19 +7,19 @@ public enum ServiceOrderState {
 	APPROVED(2,"Aprovado"),
 	COMPLETED(3,"Finalizada");
 	
-	private Integer codigo;
+	private Integer id;
 	private String label;
 
-	private ServiceOrderState(Integer codigo, String label) {
-		this.codigo = codigo;
+	private ServiceOrderState(Integer id, String label) {
+		this.id = id;
 		this.label = label;
 	}
 	
-	public Integer getCodigo() {
-		return codigo;
+	public Integer getId() {
+		return id;
 	}
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getLabel() {
 		return label;

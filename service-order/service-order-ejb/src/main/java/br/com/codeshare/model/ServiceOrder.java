@@ -34,14 +34,14 @@ public class ServiceOrder implements Serializable {
 	
 	private String executedService;
 	
-	private ServiceOrderType orderServiceType;
+	private ServiceOrderType serviceOrderType;
 	
 	@Enumerated(EnumType.ORDINAL)
-	private ServiceOrderState estadoOrdemServico;
+	private ServiceOrderState soState;
 	
 	@Column(name = "dateSo")
 	@Temporal(TemporalType.DATE)
-	private Date dataSo;
+	private Date dateSo;
 	
 	@Temporal(TemporalType.DATE)
 	private Date approvedDate;
@@ -90,28 +90,28 @@ public class ServiceOrder implements Serializable {
 		this.executedService = executedService;
 	}
 
-	public ServiceOrderType getOrderServiceType() {
-		return orderServiceType;
+	public ServiceOrderType getServiceOrderType() {
+		return serviceOrderType;
 	}
 
-	public void setOrderServiceType(ServiceOrderType orderServiceType) {
-		this.orderServiceType = orderServiceType;
+	public void setServiceOrderType(ServiceOrderType serviceOrderType) {
+		this.serviceOrderType = serviceOrderType;
 	}
 
-	public ServiceOrderState getEstadoOrdemServico() {
-		return estadoOrdemServico;
+	public ServiceOrderState getSOState() {
+		return soState;
 	}
 
-	public void setEstadoOrdemServico(ServiceOrderState estadoOrdemServico) {
-		this.estadoOrdemServico = estadoOrdemServico;
+	public void setSOState(ServiceOrderState soState) {
+		this.soState = soState;
 	}
 
-	public Date getDataSo() {
-		return dataSo;
+	public Date getDateSo() {
+		return dateSo;
 	}
 
-	public void setDataSo(Date dataSo) {
-		this.dataSo = dataSo;
+	public void setDateSo(Date dataSo) {
+		this.dateSo = dataSo;
 	}
 
 	public Date getApprovedDate() {

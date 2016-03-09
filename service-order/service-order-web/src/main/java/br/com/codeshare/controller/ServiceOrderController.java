@@ -13,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.codeshare.enums.ServiceOrderState;
 import br.com.codeshare.enums.ServiceOrderType;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.model.ServiceOrder;
@@ -41,8 +42,8 @@ public class ServiceOrderController implements Serializable{
 	private Long filterSo;
 	private List<ServiceOrder> listServiceOrder;
 	private ServiceOrderType[] orderTypes;
+	private ServiceOrderState[] orderStates;
 	private List<Phone> phones;
-
 	private ServiceOrder soSelected;
 
 	@Produces
@@ -66,11 +67,30 @@ public class ServiceOrderController implements Serializable{
 			facesContext.addMessage(null, m);
 		}
 	}
+	
+	public String update() throws Exception {
+		try {
+			serviceOrderService.register(soSelected);
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
+			initNewServiceOrder();
+			
+			/*if(!conversation.isTransient()){
+				conversation.end();
+			}*/
+		} catch (Exception e) {
+			String errorMessage = getRootErrorMessage(e);
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
+			facesContext.addMessage(null, m);
+		}
+		
+		return "detail_so";
+	}
 
 	@PostConstruct
 	public void initNewServiceOrder() {
 		this.newServiceOrder = new ServiceOrder();
 		orderTypes = ServiceOrderType.values();
+		orderStates = ServiceOrderState.values();
 		listServiceOrder = serviceOrderService.findAll();
 	}
 
@@ -130,6 +150,10 @@ public class ServiceOrderController implements Serializable{
 	public ServiceOrderType[] getOrderTypes() {
 		return orderTypes;
 	}
+	
+	public ServiceOrderState[] getOrderStates() {
+		return orderStates;
+	}
 
 	public void onClientChange(){
 		/*if(conversation.isTransient()){
@@ -152,16 +176,19 @@ public class ServiceOrderController implements Serializable{
 	
 	public String detail(ServiceOrder so){
 		this.soSelected = so;
-		return "detail_os";
+		facesContext.getCurrentInstance().getExternalContext().getSessionMap().put("so", so);
+		return "detail_so";
 	}
 	
 	public String update(ServiceOrder so){
 		this.soSelected = so;
-		return "update_os";
+		facesContext.getCurrentInstance().getExternalContext().getSessionMap().put("so", so);
+		return "update_so";
 	}
 	
 	public ServiceOrder getSoSelected() {
-		return soSelected;
+		ServiceOrder so = (ServiceOrder)facesContext.getCurrentInstance().getExternalContext().getSessionMap().get("so");
+		return so;
 	}
 	
 	public void searchByName(){
@@ -183,5 +210,9 @@ public class ServiceOrderController implements Serializable{
 		if (os != null){
 			listServiceOrder.add(os);
 		}
+	}
+	
+	public ServiceOrder soSelected(){
+		return soSelected;
 	}
 }
