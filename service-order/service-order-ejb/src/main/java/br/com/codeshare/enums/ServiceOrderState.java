@@ -2,10 +2,10 @@ package br.com.codeshare.enums;
 
 public enum ServiceOrderState {
 
-	OPEN(0,"Aberto"),
-	WAITING_APPROVAL(1,"Aguardando aprovação"),
-	APPROVED(2,"Aprovado"),
-	COMPLETED(3,"Finalizada");
+	OPEN(0,"update.serviceorder.osstate.open"),
+	WAITING_APPROVAL(1,"update.serviceorder.osstate.waitapproval"),
+	APPROVED(2,"update.serviceorder.osstate.approved"),
+	COMPLETED(3,"update.serviceorder.osstate.finalized");
 	
 	private Integer id;
 	private String label;

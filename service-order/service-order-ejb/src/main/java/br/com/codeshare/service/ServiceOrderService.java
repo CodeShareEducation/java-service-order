@@ -34,4 +34,9 @@ public class ServiceOrderService {
     public List<ServiceOrder> findClientByName(String name){
     	return soRepository.findClientByName(name);
     }
+    
+    public void update(ServiceOrder serviceOrder) throws Exception{
+    	soRepository.update(serviceOrder);
+    	soEventSrc.fire(serviceOrder);
+    }
 }

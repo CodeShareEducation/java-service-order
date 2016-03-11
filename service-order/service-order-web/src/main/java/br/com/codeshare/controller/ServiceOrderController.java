@@ -2,6 +2,7 @@ package br.com.codeshare.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -54,6 +55,7 @@ public class ServiceOrderController implements Serializable{
 	
 	public void save() throws Exception {
 		try {
+			newServiceOrder.setDateSo(new Date());
 			serviceOrderService.register(newServiceOrder);
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
 			initNewServiceOrder();
@@ -68,9 +70,9 @@ public class ServiceOrderController implements Serializable{
 		}
 	}
 	
-	public String update() throws Exception {
+	public String update(ServiceOrder so) throws Exception {
 		try {
-			serviceOrderService.register(soSelected);
+			serviceOrderService.update(so);
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
 			initNewServiceOrder();
 			
@@ -83,7 +85,7 @@ public class ServiceOrderController implements Serializable{
 			facesContext.addMessage(null, m);
 		}
 		
-		return "detail_so";
+		return "service-order";
 	}
 
 	@PostConstruct
@@ -180,7 +182,7 @@ public class ServiceOrderController implements Serializable{
 		return "detail_so";
 	}
 	
-	public String update(ServiceOrder so){
+	public String edit(ServiceOrder so){
 		this.soSelected = so;
 		facesContext.getCurrentInstance().getExternalContext().getSessionMap().put("so", so);
 		return "update_so";

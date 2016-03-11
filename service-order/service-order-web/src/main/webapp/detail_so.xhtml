@@ -54,18 +54,18 @@
 			
 			<div>
 				<p:outputLabel value="#{label['detail.serviceorder.esn']}" styleClass="itens_detalhamento_titulo"/>
-				<p:outputLabel value="#{ordemServicoMBean.osSelecionada.telefone.esn}"/>
+				<p:outputLabel value="#{serviceOrderController.soSelected.phone.esn}"/>
 			</div>
 			
 			<div>
 				<p:outputLabel value="#{label['detail.serviceorder.date']}" styleClass="itens_detalhamento_titulo"/>
-				<p:outputLabel value="#{serviceOrderController.soSelected.approvedDate}">
+				<p:outputLabel value="#{serviceOrderController.soSelected.dateSo}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
 				</p:outputLabel>
 			</div>
 			<div>
 				<p:outputLabel value="#{label['detail.serviceorder.sotype']}" styleClass="itens_detalhamento_titulo"/>
-				<p:outputLabel value="#{label[serviceOrderController.soSelected.orderServiceType.label]}"/>
+				<p:outputLabel value="#{label[serviceOrderController.soSelected.serviceOrderType.label]}"/>
 			</div>
 			<div>
 				<p:outputLabel value="#{label['detail.serviceorder.value']}"/>

@@ -32,7 +32,7 @@
 
 					<p:outputLabel for="soState" value="Estado da Os"/>
 					<p:selectOneRadio id="soState" value="#{serviceOrderController.soSelected.SOState}">
-						<f:selectItems value="#{serviceOrderController.orderTypes}" var="state" itemValue="#{state}" itemLabel="#{label[state.label]}"/>
+						<f:selectItems value="#{serviceOrderController.orderStates}" var="state" itemValue="#{state}" itemLabel="#{label[state.label]}"/>
 						<f:ajax execute="@this" render="action"/>
 					</p:selectOneRadio>
 						
@@ -54,7 +54,7 @@
 							</p:fragment>
 					</p:fragment>
 					
-					<p:commandButton action="#{serviceOrderController.update}" value="#{label['new-serviceorder.save']}" />
+					<p:commandButton action="#{serviceOrderController.update(serviceOrderController.soSelected)}" value="#{label['new-serviceorder.save']}" />
 				</p:panelGrid>
 			</p:fieldset>
 			
