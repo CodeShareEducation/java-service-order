@@ -31,4 +31,13 @@ public class ClientService{
 		return clientRepository.findAllOrderedByName();
 	}
 	
+	public List<Client> findByName(String name) {
+		return clientRepository.findClientByName(name);
+	}
+
+	public void update(Client client) throws Exception {
+		clientRepository.update(client);
+		clientEventSrc.fire(client);
+	}
+	
 }
