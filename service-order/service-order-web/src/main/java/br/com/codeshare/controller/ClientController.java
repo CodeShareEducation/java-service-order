@@ -16,6 +16,7 @@ import javax.inject.Named;
 import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.service.ClientService;
+import br.com.codeshare.service.PhoneService;
 
 @Named
 @ConversationScoped
@@ -33,6 +34,8 @@ public class ClientController implements Serializable {
 
 	@Inject
 	private PhoneController phoneController;
+	@Inject
+	private PhoneService phoneService;
 	
 	@Inject
 	private Conversation conversation;
@@ -112,6 +115,14 @@ public class ClientController implements Serializable {
 		phoneController.initNewPhone();
 	}
 	
+	public void removeClientPhone(Phone phone){
+		if(conversation.isTransient()){
+			conversation.begin();
+		}
+		clientSelected.getPhones().remove(phone);
+		clientService.removePhoneCliente(clientSelected,phone);
+	}
+	
 	public void addClientPhoneOnUpdate() {
 		if(conversation.isTransient()){
 			conversation.begin();
@@ -134,6 +145,10 @@ public class ClientController implements Serializable {
 	}
 	
 	public String edit(Client client) {
+		if(conversation.isTransient()){
+			conversation.begin();
+		}
+		
 		this.clientSelected = client;
 		facesContext.getCurrentInstance().getExternalContext().getSessionMap().put("client", client);
 		return "update_client";

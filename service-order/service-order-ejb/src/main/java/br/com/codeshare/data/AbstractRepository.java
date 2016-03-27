@@ -16,7 +16,7 @@ public class AbstractRepository<T extends Serializable> implements Repository<T>
 	@Inject
 	protected EntityManager em;
 	@Inject
-	private Logger log;
+	protected Logger log;
 
 	@SuppressWarnings("unchecked")
 	private Class<T> getType() {

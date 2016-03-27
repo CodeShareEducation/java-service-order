@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import br.com.codeshare.data.ClientRepository;
 import br.com.codeshare.model.Client;
+import br.com.codeshare.model.Phone;
 
 @Stateless
 public class ClientService{
@@ -38,6 +39,10 @@ public class ClientService{
 	public void update(Client client) throws Exception {
 		clientRepository.update(client);
 		clientEventSrc.fire(client);
+	}
+	
+	public void removePhoneCliente(Client client, Phone phone){
+		clientRepository.removePhoneClient(client, phone);
 	}
 	
 }

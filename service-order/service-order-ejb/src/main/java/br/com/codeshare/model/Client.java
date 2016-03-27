@@ -10,13 +10,20 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
+@NamedQueries(
+		{@NamedQuery(name="Client.findAllEager", query="select distinct c from Client c join fetch c.phones"),
+		@NamedQuery(name="Client.findByNameEager",query="select distinct c from Client c join fetch c.phones where lower (c.name) like :name")})
 public class Client implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	public static final String FIND_ALL_EAGER = "Client.findAllEager";
+	public static final String FIND_BY_NAME_EAGER = "Client.findByNameEager";
 	
 	@SequenceGenerator(name="SEQ_CLIENT",sequenceName="SEQ_CLIENT",initialValue=1,allocationSize=1)
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_CLIENT")

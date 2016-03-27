@@ -41,4 +41,11 @@ public class PhoneService {
 		log.info("Search for phone with id " + id);
 		return phoneRepository.findById(id);
 	}
+	
+	public void remove(Phone phone){
+		log.info(String.format("Removing %s  - %s", phone.getBrand(), phone.getModel()));
+		Phone merge = em.merge(phone);
+		em.remove(merge);
+		phoneEvent.fire(merge);
+	}
 }
