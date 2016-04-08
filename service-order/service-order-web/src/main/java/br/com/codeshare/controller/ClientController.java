@@ -45,6 +45,7 @@ public class ClientController implements Serializable {
 	private List<Client> listClients;
 
 	private Client clientSelected;
+	private List<Phone> phoneToBeRemove;
 
 	@Produces
 	@Named
@@ -78,6 +79,11 @@ public class ClientController implements Serializable {
 	public String update(Client client) throws Exception{
 		try {
 			clientService.update(client);
+			
+			for(Phone phone : phoneToBeRemove){
+				phoneService.remove(phone);
+			}
+			
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
 			initNewClient();
 		} catch (Exception e) {
@@ -116,11 +122,11 @@ public class ClientController implements Serializable {
 	}
 	
 	public void removeClientPhone(Phone phone){
-		if(conversation.isTransient()){
-			conversation.begin();
-		}
 		clientSelected.getPhones().remove(phone);
-		clientService.removePhoneCliente(clientSelected,phone);
+		if(phoneToBeRemove == null){
+			phoneToBeRemove = new ArrayList<Phone>();
+		}
+		phoneToBeRemove.add(phone);
 	}
 	
 	public void addClientPhoneOnUpdate() {
