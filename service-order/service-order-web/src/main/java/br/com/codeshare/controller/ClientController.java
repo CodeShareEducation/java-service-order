@@ -34,8 +34,6 @@ public class ClientController implements Serializable {
 
 	@Inject
 	private PhoneController phoneController;
-	@Inject
-	private PhoneService phoneService;
 	
 	@Inject
 	private Conversation conversation;
@@ -78,18 +76,15 @@ public class ClientController implements Serializable {
 
 	public String update(Client client) throws Exception{
 		try {
-			clientService.update(client);
-			
-			for(Phone phone : phoneToBeRemove){
-				phoneService.remove(phone);
-			}
-			
+			clientService.update(client,phoneToBeRemove);
+			clientSelected = new Client();
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
 			initNewClient();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
 			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
 			facesContext.addMessage(null, m);
+			return "clients";
 		}
 		return "clients";
 	}

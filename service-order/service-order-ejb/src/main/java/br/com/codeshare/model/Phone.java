@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -24,7 +25,7 @@ public class Phone implements Serializable{
 	
 	@SequenceGenerator(name="SEQ_PHONE",sequenceName="SEQ_PHONE",initialValue=1,allocationSize=1)
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_PHONE")
-	@Column(name="telefone_id")
+	@Column(name="phone_id")
 	private Long id;
 	private String brand;
 	private String model;
@@ -33,8 +34,9 @@ public class Phone implements Serializable{
 	private PhoneState state;
 	private String esn;
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="client_id")
 	private Client client;
-	@OneToMany(mappedBy="phone")
+	@OneToMany(mappedBy="phone",fetch=FetchType.EAGER)
 	private List<ServiceOrder> os;
 	
 	public Phone() {

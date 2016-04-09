@@ -35,7 +35,10 @@
 
 					<p:outputLabel for="reportedProblem" value="#{label['new-serviceorder.reportedproblem']}" />
 					<p:inputTextarea id="reportedProblem" value="#{newServiceOrder.reportedProblem}" />
-
+					
+					<p:outputLabel for="value" value="#{label['new-serviceorder.value']}" />
+                    <p:inputText id="value" value="#{newServiceOrder.value}" />
+                    
 					<p:commandButton action="#{serviceOrderController.save}" value="#{label['new-serviceorder.save']}" />
 				</p:panelGrid>
 			</p:fieldset>

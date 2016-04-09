@@ -17,6 +17,8 @@ public class ClientService{
 	private ClientRepository clientRepository;
 	@Inject
 	private Event<Client> clientEventSrc;
+	@Inject
+	private PhoneService phoneService;
 	
 	public void save(Client client) throws Exception{
 		clientRepository.insert(client);
@@ -36,8 +38,15 @@ public class ClientService{
 		return clientRepository.findClientByName(name);
 	}
 
-	public void update(Client client) throws Exception {
+	public void update(Client client,List<Phone>phonesToBeRemove) throws Exception {
 		clientRepository.update(client);
+		
+		if(phonesToBeRemove != null){
+			for(Phone phone : phonesToBeRemove){
+				phoneService.remove(phone);
+			}
+		}
+		
 		clientEventSrc.fire(client);
 	}
 	

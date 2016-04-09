@@ -1,6 +1,7 @@
 package br.com.codeshare.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
@@ -49,10 +51,14 @@ public class ServiceOrder implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date datePhoneWithdrawl;
 	
+	private BigDecimal value;
+	
 	@ManyToOne
+	@JoinColumn(name="client_id")
 	private Client client;
 	
 	@ManyToOne
+	@JoinColumn(name="phone_id")
 	private Phone phone;
 
 	public ServiceOrder() {
@@ -144,6 +150,22 @@ public class ServiceOrder implements Serializable {
 
 	public void setPhone(Phone phone) {
 		this.phone = phone;
+	}
+	
+	public ServiceOrderState getSoState() {
+		return soState;
+	}
+
+	public void setSoState(ServiceOrderState soState) {
+		this.soState = soState;
+	}
+
+	public BigDecimal getValue() {
+		return value;
+	}
+
+	public void setValue(BigDecimal value) {
+		this.value = value;
 	}
 
 	@Override

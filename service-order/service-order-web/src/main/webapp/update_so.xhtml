@@ -30,6 +30,9 @@
 					<p:outputLabel for="reportedProblem" value="#{label['new-serviceorder.reportedproblem']}" />
 					<p:inputTextarea id="reportedProblem" value="#{serviceOrderController.soSelected.reportedProblem}" />
 
+                    <p:outputLabel for="value" value="#{label['new-serviceorder.value']}" />
+                    <p:inputText id="value" value="#{serviceOrderController.soSelected.value}" />
+
 					<p:outputLabel for="soState" value="Estado da Os"/>
 					<p:selectOneRadio id="soState" value="#{serviceOrderController.soSelected.SOState}">
 						<f:selectItems value="#{serviceOrderController.orderStates}" var="state" itemValue="#{state}" itemLabel="#{label[state.label]}"/>
