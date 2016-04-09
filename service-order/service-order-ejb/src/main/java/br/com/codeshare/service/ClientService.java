@@ -19,6 +19,8 @@ public class ClientService{
 	private Event<Client> clientEventSrc;
 	@Inject
 	private PhoneService phoneService;
+	@Inject
+	private ServiceOrderService soService;
 	
 	public void save(Client client) throws Exception{
 		clientRepository.insert(client);
@@ -43,7 +45,12 @@ public class ClientService{
 		
 		if(phonesToBeRemove != null){
 			for(Phone phone : phonesToBeRemove){
-				phoneService.remove(phone);
+				if(soService.findSoByPhoneId(phone.getId()).isEmpty()){
+					phoneService.remove(phone);
+				}
+				else{
+					throw new IllegalStateException("Can't remove the phone because has service order");
+				}
 			}
 		}
 		

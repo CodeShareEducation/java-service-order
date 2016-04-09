@@ -3,12 +3,15 @@ package br.com.codeshare.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,6 +29,8 @@ public class ClientController implements Serializable {
 
 	@Inject
 	private FacesContext facesContext;
+	@Inject
+	private ExternalContext externalContext;
 
 	@Inject
 	private ClientService clientService;
@@ -34,9 +39,14 @@ public class ClientController implements Serializable {
 
 	@Inject
 	private PhoneController phoneController;
+	@Inject
+	private PhoneService phoneService;
 	
 	@Inject
 	private Conversation conversation;
+	
+	@Inject
+	private Locale locale;
 	
 	private String filterName;
 
@@ -61,15 +71,15 @@ public class ClientController implements Serializable {
 	public String save() throws Exception {
 		try {
 			clientService.save(newClient);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!","Registration successful"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, getMessage("register"),getMessage("sucess_register")));
 			initNewClient();
-			if(!conversation.isTransient()){
-				conversation.end();
-			}
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,errorMessage, "Registration Unsuccessful");
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,errorMessage,getMessage("unsuccessful"));
 			facesContext.addMessage(null, m);
+		}
+		if(!conversation.isTransient()){
+			conversation.end();
 		}
 		return null;
 	}
@@ -77,14 +87,16 @@ public class ClientController implements Serializable {
 	public String update(Client client) throws Exception{
 		try {
 			clientService.update(client,phoneToBeRemove);
-			clientSelected = new Client();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  getMessage("register"),getMessage("sucess_register")));
 			initNewClient();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, getMessage("unsuccessful"));
 			facesContext.addMessage(null, m);
-			return "clients";
+			initNewClient();
+		}
+		if(!conversation.isTransient()){
+			conversation.end();
 		}
 		return "clients";
 	}
@@ -117,6 +129,10 @@ public class ClientController implements Serializable {
 	}
 	
 	public void removeClientPhone(Phone phone){
+		if(conversation.isTransient()){
+			conversation.begin();
+		}
+		
 		clientSelected.getPhones().remove(phone);
 		if(phoneToBeRemove == null){
 			phoneToBeRemove = new ArrayList<Phone>();
@@ -149,14 +165,15 @@ public class ClientController implements Serializable {
 		if(conversation.isTransient()){
 			conversation.begin();
 		}
-		
 		this.clientSelected = client;
-		facesContext.getCurrentInstance().getExternalContext().getSessionMap().put("client", client);
+		List<Phone> phoneList = phoneService.findPhoneByClientId(clientSelected.getId());
+		clientSelected.setTelefones(phoneList);
+		externalContext.getSessionMap().put("client", client);
 		return "update_client";
 	}
 	
 	public Client getClientSelected() {
-		return (Client) facesContext.getCurrentInstance().getExternalContext().getSessionMap().get("client");
+		return (Client) externalContext.getSessionMap().get("client");
 	}
 	
 	public String getFilterName() {
@@ -169,6 +186,12 @@ public class ClientController implements Serializable {
 
 	public List<Client> getListClients() {
 		return listClients;
+	}
+	
+	private String getMessage(String key){
+		ResourceBundle resourceBundle = FacesContext.getCurrentInstance().getApplication().getResourceBundle(facesContext, "msg");
+		String messageBundle = resourceBundle.getString(key);
+		 return ResourceBundle.getBundle(messageBundle, locale).getString(key);
 	}
 	
 }

@@ -16,8 +16,12 @@
  */
 package br.com.codeshare.util;
 
+import java.io.Serializable;
+import java.util.Locale;
+
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -32,12 +36,24 @@ import javax.faces.context.FacesContext;
  * private EntityManager em;
  * </pre>
  */
-public class WebResources {
+public class WebResources{
 
+	private static final long serialVersionUID = 1L;
+	
+	@Produces
+	@RequestScoped
+	public ExternalContext producesExternalContext(){
+		return FacesContext.getCurrentInstance().getExternalContext();
+	}
     @Produces
     @RequestScoped
     public FacesContext produceFacesContext() {
         return FacesContext.getCurrentInstance();
     }
-
+    
+    @Produces
+    public Locale producesLocale(){
+    	return FacesContext.getCurrentInstance().getViewRoot().getLocale();
+    }
+    
 }

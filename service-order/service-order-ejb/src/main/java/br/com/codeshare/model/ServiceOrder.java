@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,9 +22,11 @@ import br.com.codeshare.enums.ServiceOrderState;
 import br.com.codeshare.enums.ServiceOrderType;
 
 @Entity
+@NamedQuery(name="ServiceOrder.findSoByPhone", query="select so from ServiceOrder so where so.phone.id = :phoneid")
 public class ServiceOrder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	public static final String FIND_SO_BY_PHONE = "ServiceOrder.findSoByPhone";
 
 	@SequenceGenerator(name = "SEQ_OS", sequenceName = "SEQ_OS", initialValue = 1, allocationSize = 1)
 	@Id

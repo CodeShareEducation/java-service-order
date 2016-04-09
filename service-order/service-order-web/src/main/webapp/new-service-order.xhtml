@@ -39,7 +39,7 @@
 					<p:outputLabel for="value" value="#{label['new-serviceorder.value']}" />
                     <p:inputText id="value" value="#{newServiceOrder.value}" />
                     
-					<p:commandButton action="#{serviceOrderController.save}" value="#{label['new-serviceorder.save']}" />
+					<p:commandButton action="#{serviceOrderController.save}" value="#{label['new-serviceorder.save']}" update="@form"/>
 				</p:panelGrid>
 			</p:fieldset>
 		</h:form>

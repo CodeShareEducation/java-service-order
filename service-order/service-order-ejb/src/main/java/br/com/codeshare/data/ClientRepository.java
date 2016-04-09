@@ -22,7 +22,7 @@ public class ClientRepository extends AbstractRepository<Client>{
 	@Override
 	public List<Client> findAllOrderedByName() {
 		log.info("Recovering clients ...");
-		TypedQuery<Client> query = em.createNamedQuery(Client.FIND_ALL_EAGER,Client.class);;
+		TypedQuery<Client> query = em.createNamedQuery(Client.FIND_ALL,Client.class);
 		return query.getResultList();
 	}
 	

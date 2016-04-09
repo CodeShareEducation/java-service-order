@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 
 import br.com.codeshare.data.PhoneRepository;
 import br.com.codeshare.model.Phone;
+import br.com.codeshare.model.ServiceOrder;
 
 @Stateless
 public class PhoneService {
@@ -48,4 +49,8 @@ public class PhoneService {
 		em.remove(merge);
 		phoneEvent.fire(merge);
 	}
+	
+	public List<Phone> findPhoneByClientId(Long id){
+    	return phoneRepository.findByClientId(id);
+    }
 }

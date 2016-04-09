@@ -17,12 +17,12 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 @NamedQueries(
-		{@NamedQuery(name="Client.findAllEager", query="select distinct c from Client c join fetch c.phones"),
+		{@NamedQuery(name="Client.findAll", query="select distinct c from Client c"),
 		@NamedQuery(name="Client.findByNameEager",query="select distinct c from Client c join fetch c.phones where lower (c.name) like :name")})
 public class Client implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	public static final String FIND_ALL_EAGER = "Client.findAllEager";
+	public static final String FIND_ALL = "Client.findAll";
 	public static final String FIND_BY_NAME_EAGER = "Client.findByNameEager";
 	
 	@SequenceGenerator(name="SEQ_CLIENT",sequenceName="SEQ_CLIENT",initialValue=1,allocationSize=1)

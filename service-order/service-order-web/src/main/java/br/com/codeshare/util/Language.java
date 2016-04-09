@@ -3,7 +3,6 @@ package br.com.codeshare.util;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -19,29 +18,25 @@ public class Language implements Serializable {
 	private FacesContext facesContext;
 
 	private String localeCode;
+	
+	@Inject
 	private Locale locale;
 
-	@PostConstruct
-	private void init() {
-		locale = facesContext.getExternalContext().getRequestLocale();
+	public String getLanguage()
+	{
+		return locale.getLanguage();
 	}
 
 	public String getLocaleCode() {
 		return localeCode;
 	}
 	
-	public String getLanguage()
-	{
-		return locale.getLanguage();
-	}
-
 	public void setLocaleCode(String localeCode) {
 		this.localeCode = localeCode;
 	}
-
+	
 	// value change event listener
 	public void countryLocaleCodeChanged() {
-		locale = new Locale(localeCode);
-		facesContext.getViewRoot().setLocale(locale);
+		facesContext.getViewRoot().setLocale(new Locale(localeCode));
 	}
 }

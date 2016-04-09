@@ -39,4 +39,8 @@ public class ServiceOrderService {
     	soRepository.update(serviceOrder);
     	soEventSrc.fire(serviceOrder);
     }
+    
+    public List<ServiceOrder> findSoByPhoneId(Long id){
+    	return soRepository.findByPhoneId(id);
+    }
 }

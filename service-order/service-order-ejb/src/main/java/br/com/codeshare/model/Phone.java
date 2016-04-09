@@ -13,15 +13,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import br.com.codeshare.enums.PhoneState;
 
 @Entity
+@NamedQuery(name="Phone.findPhoneByClient", query="select p from Phone p where p.client.id = :clientid")
 public class Phone implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	public static final String FIND_PHONE_BY_CLIENT = "Phone.findPhoneByClient";
 	
 	@SequenceGenerator(name="SEQ_PHONE",sequenceName="SEQ_PHONE",initialValue=1,allocationSize=1)
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_PHONE")

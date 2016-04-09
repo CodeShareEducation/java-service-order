@@ -16,4 +16,12 @@ public class ServiceOrderRepository extends AbstractRepository<ServiceOrder>{
 		query.setParameter("name", "%"+nameFilter.toLowerCase()+"%");
 		return query.getResultList();
 	}
+	
+	public List<ServiceOrder> findByPhoneId(Long id){
+		log.info(String.format("Recovering service orders of phone: %d",id));
+		TypedQuery<ServiceOrder> query = 
+				em.createNamedQuery(ServiceOrder.FIND_SO_BY_PHONE,ServiceOrder.class);
+		query.setParameter("phoneid", id);
+		return query.getResultList();
+	}
 }
