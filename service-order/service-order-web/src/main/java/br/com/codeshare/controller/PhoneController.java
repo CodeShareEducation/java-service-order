@@ -11,6 +11,7 @@ import javax.inject.Named;
 import br.com.codeshare.enums.PhoneState;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.service.PhoneService;
+import br.com.codeshare.util.WebResources;
 
 @Model
 public class PhoneController {
@@ -33,12 +34,11 @@ public class PhoneController {
 	public void save() throws Exception{
 		try {
 			phoneService.register(newPhone);
-			facesContext.addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
+			facesContext.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"), WebResources.getMessage("sucess_register")));
 			initNewPhone();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, WebResources.getMessage("unsuccessful"));
             facesContext.addMessage(null, m);
 		}
 	}

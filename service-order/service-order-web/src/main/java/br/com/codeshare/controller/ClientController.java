@@ -3,23 +3,23 @@ package br.com.codeshare.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
+import br.com.codeshare.qualifiers.SessionMap;
 import br.com.codeshare.service.ClientService;
 import br.com.codeshare.service.PhoneService;
+import br.com.codeshare.util.WebResources;
 
 @Named
 @ConversationScoped
@@ -29,9 +29,8 @@ public class ClientController implements Serializable {
 
 	@Inject
 	private FacesContext facesContext;
-	@Inject
-	private ExternalContext externalContext;
-
+	@Inject @SessionMap
+	private Map<String, Object> sessionMap;
 	@Inject
 	private ClientService clientService;
 
@@ -44,9 +43,6 @@ public class ClientController implements Serializable {
 	
 	@Inject
 	private Conversation conversation;
-	
-	@Inject
-	private Locale locale;
 	
 	private String filterName;
 
@@ -71,11 +67,11 @@ public class ClientController implements Serializable {
 	public String save() throws Exception {
 		try {
 			clientService.save(newClient);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, getMessage("register"),getMessage("sucess_register")));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"),WebResources.getMessage("sucess_register")));
 			initNewClient();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,errorMessage,getMessage("unsuccessful"));
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,errorMessage,WebResources.getMessage("unsuccessful"));
 			facesContext.addMessage(null, m);
 		}
 		if(!conversation.isTransient()){
@@ -87,11 +83,11 @@ public class ClientController implements Serializable {
 	public String update(Client client) throws Exception{
 		try {
 			clientService.update(client,phoneToBeRemove);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  getMessage("register"),getMessage("sucess_register")));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  WebResources.getMessage("register"),WebResources.getMessage("sucess_register")));
 			initNewClient();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, getMessage("unsuccessful"));
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, WebResources.getMessage("unsuccessful"));
 			facesContext.addMessage(null, m);
 			initNewClient();
 		}
@@ -168,12 +164,12 @@ public class ClientController implements Serializable {
 		this.clientSelected = client;
 		List<Phone> phoneList = phoneService.findPhoneByClientId(clientSelected.getId());
 		clientSelected.setTelefones(phoneList);
-		externalContext.getSessionMap().put("client", client);
+		sessionMap.put("client", client);
 		return "update_client";
 	}
 	
 	public Client getClientSelected() {
-		return (Client) externalContext.getSessionMap().get("client");
+		return (Client) sessionMap.get("client");
 	}
 	
 	public String getFilterName() {
@@ -186,12 +182,6 @@ public class ClientController implements Serializable {
 
 	public List<Client> getListClients() {
 		return listClients;
-	}
-	
-	private String getMessage(String key){
-		ResourceBundle resourceBundle = FacesContext.getCurrentInstance().getApplication().getResourceBundle(facesContext, "msg");
-		String messageBundle = resourceBundle.getString(key);
-		 return ResourceBundle.getBundle(messageBundle, locale).getString(key);
 	}
 	
 }

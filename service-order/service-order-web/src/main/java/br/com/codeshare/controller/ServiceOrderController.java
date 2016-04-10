@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,6 +20,7 @@ import br.com.codeshare.model.Phone;
 import br.com.codeshare.model.ServiceOrder;
 import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.service.ServiceOrderService;
+import br.com.codeshare.util.WebResources;
 
 @Named
 @ViewScoped
@@ -29,14 +30,15 @@ public class ServiceOrderController implements Serializable{
 
 	@Inject
 	private FacesContext facesContext;
-
+	@Inject
+	private ExternalContext externalContext;
 	@Inject
 	private ServiceOrderService serviceOrderService;
 	@Inject
 	private PhoneService phoneService;
 	
-	@Inject
-	private Conversation conversation;
+//	@Inject
+//	private Conversation conversation;
 
 	private ServiceOrder newServiceOrder;
 	private String filterClient;
@@ -57,7 +59,7 @@ public class ServiceOrderController implements Serializable{
 		try {
 			newServiceOrder.setDateSo(new Date());
 			serviceOrderService.register(newServiceOrder);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"), WebResources.getMessage("sucess_register")));
 			initNewServiceOrder();
 			
 			/*if(!conversation.isTransient()){
@@ -65,7 +67,7 @@ public class ServiceOrderController implements Serializable{
 			}*/
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, WebResources.getMessage("unsuccessful"));
 			facesContext.addMessage(null, m);
 		}
 	}
@@ -73,7 +75,7 @@ public class ServiceOrderController implements Serializable{
 	public String update(ServiceOrder so) throws Exception {
 		try {
 			serviceOrderService.update(so);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"), WebResources.getMessage("sucess_register")));
 			initNewServiceOrder();
 			
 			/*if(!conversation.isTransient()){
@@ -81,7 +83,7 @@ public class ServiceOrderController implements Serializable{
 			}*/
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration Unsuccessful");
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, WebResources.getMessage("unsuccessful"));
 			facesContext.addMessage(null, m);
 		}
 		
@@ -178,18 +180,18 @@ public class ServiceOrderController implements Serializable{
 	
 	public String detail(ServiceOrder so){
 		this.soSelected = so;
-		facesContext.getCurrentInstance().getExternalContext().getSessionMap().put("so", so);
+		externalContext.getSessionMap().put("so", so);
 		return "detail_so";
 	}
 	
 	public String edit(ServiceOrder so){
 		this.soSelected = so;
-		facesContext.getCurrentInstance().getExternalContext().getSessionMap().put("so", so);
+		externalContext.getSessionMap().put("so", so);
 		return "update_so";
 	}
 	
 	public ServiceOrder getSoSelected() {
-		ServiceOrder so = (ServiceOrder)facesContext.getCurrentInstance().getExternalContext().getSessionMap().get("so");
+		ServiceOrder so = (ServiceOrder)externalContext.getSessionMap().get("so");
 		return so;
 	}
 	

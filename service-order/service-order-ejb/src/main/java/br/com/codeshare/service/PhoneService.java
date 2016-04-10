@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 
 import br.com.codeshare.data.PhoneRepository;
 import br.com.codeshare.model.Phone;
-import br.com.codeshare.model.ServiceOrder;
 
 @Stateless
 public class PhoneService {

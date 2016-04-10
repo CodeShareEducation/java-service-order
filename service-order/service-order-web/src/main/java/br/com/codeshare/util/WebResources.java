@@ -16,16 +16,23 @@
  */
 package br.com.codeshare.util;
 
-import java.io.Serializable;
 import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import br.com.codeshare.qualifiers.ApplicationMap;
+import br.com.codeshare.qualifiers.RequestMap;
+import br.com.codeshare.qualifiers.RequestParameterMap;
+import br.com.codeshare.qualifiers.SessionMap;
+
 /**
- * This class uses CDI to alias Java EE resources, such as the persistence context, to CDI beans
+ * This class uses CDI to alias Java EE resources, such as the persistence
+ * context, to CDI beans
  * 
  * <p>
  * Example injection on a managed bean field:
@@ -36,24 +43,54 @@ import javax.faces.context.FacesContext;
  * private EntityManager em;
  * </pre>
  */
-public class WebResources{
+public class WebResources {
 
-	private static final long serialVersionUID = 1L;
-	
 	@Produces
 	@RequestScoped
-	public ExternalContext producesExternalContext(){
+	public ExternalContext producesExternalContext() {
 		return FacesContext.getCurrentInstance().getExternalContext();
 	}
-    @Produces
-    @RequestScoped
-    public FacesContext produceFacesContext() {
-        return FacesContext.getCurrentInstance();
-    }
-    
-    @Produces
-    public Locale producesLocale(){
-    	return FacesContext.getCurrentInstance().getViewRoot().getLocale();
-    }
-    
+
+	@Produces
+	@RequestScoped
+	public FacesContext produceFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
+
+	@Produces
+	public Locale producesLocale() {
+		return FacesContext.getCurrentInstance().getViewRoot().getLocale();
+	}
+
+	@Produces
+	@ApplicationMap
+	public Map<String, Object> disponibilizaApplicationMap(ExternalContext ec) {
+		return ec.getApplicationMap();
+	}
+
+	@Produces
+	@SessionMap
+	@RequestScoped
+	public Map<String, Object> disponibilizaSessionMap(ExternalContext ec) {
+		return ec.getSessionMap();
+	}
+
+	@Produces
+	@RequestMap
+	public Map<String, Object> disponibilizaRequestMap(ExternalContext ec) {
+		return ec.getRequestMap();
+	}
+
+	@Produces
+	@RequestParameterMap
+	public Map<String, String> disponibilizaParameterMap(ExternalContext ec) {
+		return ec.getRequestParameterMap();
+	}
+
+	public static String getMessage(String key) {
+		ResourceBundle resourceBundle = FacesContext.getCurrentInstance().getApplication()
+				.getResourceBundle(FacesContext.getCurrentInstance(), "msg");
+		return resourceBundle.getString(key);
+	}
+
 }
