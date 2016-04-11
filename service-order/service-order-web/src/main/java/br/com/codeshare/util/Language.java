@@ -19,14 +19,6 @@ public class Language implements Serializable {
 
 	private String localeCode;
 	
-	@Inject
-	private Locale locale;
-
-	public String getLanguage()
-	{
-		return locale.getLanguage();
-	}
-
 	public String getLocaleCode() {
 		return localeCode;
 	}

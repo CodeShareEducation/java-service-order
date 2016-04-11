@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -18,6 +18,7 @@ import br.com.codeshare.enums.ServiceOrderState;
 import br.com.codeshare.enums.ServiceOrderType;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.model.ServiceOrder;
+import br.com.codeshare.qualifiers.SessionMap;
 import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.service.ServiceOrderService;
 import br.com.codeshare.util.WebResources;
@@ -30,8 +31,8 @@ public class ServiceOrderController implements Serializable{
 
 	@Inject
 	private FacesContext facesContext;
-	@Inject
-	private ExternalContext externalContext;
+	@Inject @SessionMap
+	private Map<String, Object> sessionMap;
 	@Inject
 	private ServiceOrderService serviceOrderService;
 	@Inject
@@ -180,18 +181,18 @@ public class ServiceOrderController implements Serializable{
 	
 	public String detail(ServiceOrder so){
 		this.soSelected = so;
-		externalContext.getSessionMap().put("so", so);
+		sessionMap.put("so", so);
 		return "detail_so";
 	}
 	
 	public String edit(ServiceOrder so){
 		this.soSelected = so;
-		externalContext.getSessionMap().put("so", so);
+		sessionMap.put("so", so);
 		return "update_so";
 	}
 	
 	public ServiceOrder getSoSelected() {
-		ServiceOrder so = (ServiceOrder)externalContext.getSessionMap().get("so");
+		ServiceOrder so = (ServiceOrder)sessionMap.get("so");
 		return so;
 	}
 	
