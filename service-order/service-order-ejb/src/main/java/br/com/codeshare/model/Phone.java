@@ -16,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.codeshare.enums.PhoneState;
 
@@ -30,15 +33,27 @@ public class Phone implements Serializable{
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_PHONE")
 	@Column(name="phone_id")
 	private Long id;
+	
+	@NotNull
+	@NotEmpty
 	private String brand;
+	
+	@NotNull
+	@NotEmpty
 	private String model;
+	
+	@NotNull
 	@Column(name="phone_state")
 	@Enumerated(EnumType.ORDINAL)
 	private PhoneState state;
+	
 	private String esn;
+	
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="client_id")
 	private Client client;
+	
 	@OneToMany(mappedBy="phone",fetch=FetchType.EAGER)
 	private List<ServiceOrder> os;
 	

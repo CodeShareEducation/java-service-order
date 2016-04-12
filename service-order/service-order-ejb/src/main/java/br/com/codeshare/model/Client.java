@@ -14,6 +14,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @NamedQueries(
@@ -29,14 +33,27 @@ public class Client implements Serializable{
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_CLIENT")
 	@Column(name="client_id")
 	private Long id;
+	
+	@NotNull
+	@NotEmpty
 	private String name;
+	
 	private String adress;
+	
+	@NotEmpty
+	@NotNull
+	@Size(min=13,max=14)
 	@Column(name="home_phone")
 	private String homePhone;
+	
+	@Size(min=13,max=14)
 	@Column(name="business_phone")
 	private String bisenessPhone;
+	
 	@OneToMany(mappedBy="client")
 	private List<ServiceOrder> ordemServicos;
+	
+	@NotNull
 	@OneToMany(mappedBy="client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Phone> phones;
 	

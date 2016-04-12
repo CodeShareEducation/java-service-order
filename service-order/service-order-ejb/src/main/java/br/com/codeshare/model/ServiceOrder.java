@@ -17,6 +17,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.codeshare.enums.ServiceOrderState;
 import br.com.codeshare.enums.ServiceOrderType;
@@ -33,6 +36,8 @@ public class ServiceOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OS")
 	private Long id;
 	
+	@NotNull
+	@NotEmpty
 	private String reportedProblem;
 	
 	private String problemFound;
@@ -54,12 +59,15 @@ public class ServiceOrder implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date datePhoneWithdrawl;
 	
+	@NotNull
 	private BigDecimal value;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name="phone_id")
 	private Phone phone;
