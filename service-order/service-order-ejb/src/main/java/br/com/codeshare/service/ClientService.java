@@ -1,6 +1,7 @@
 package br.com.codeshare.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import br.com.codeshare.data.ClientRepository;
 import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
+import br.com.codeshare.util.Resources;
 
 @Stateless
 public class ClientService{
@@ -49,7 +51,7 @@ public class ClientService{
 					phoneService.remove(phone);
 				}
 				else{
-					throw new IllegalStateException("Can't remove the phone because has service order");
+					throw new IllegalStateException(Resources.getMessage("phone_has_so", new Locale("en")));
 				}
 			}
 		}

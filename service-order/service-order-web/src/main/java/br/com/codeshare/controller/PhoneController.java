@@ -1,5 +1,7 @@
 package br.com.codeshare.controller;
 
+import java.util.Locale;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
@@ -11,7 +13,7 @@ import javax.inject.Named;
 import br.com.codeshare.enums.PhoneState;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.service.PhoneService;
-import br.com.codeshare.util.WebResources;
+import br.com.codeshare.util.Resources;
 
 @Model
 public class PhoneController {
@@ -19,7 +21,8 @@ public class PhoneController {
 	
 	@Inject
 	private FacesContext facesContext;
-	
+	@Inject
+	private Locale locale;
 	@Inject
 	private PhoneService phoneService;
 	
@@ -34,11 +37,11 @@ public class PhoneController {
 	public void save() throws Exception{
 		try {
 			phoneService.register(newPhone);
-			facesContext.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"), WebResources.getMessage("sucess_register")));
+			facesContext.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, Resources.getMessage("register",locale), Resources.getMessage("sucess_register",locale)));
 			initNewPhone();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, WebResources.getMessage("unsuccessful"));
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, Resources.getMessage("unsuccessful",locale));
             facesContext.addMessage(null, m);
 		}
 	}

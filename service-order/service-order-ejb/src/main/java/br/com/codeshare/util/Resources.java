@@ -16,6 +16,8 @@
  */
 package br.com.codeshare.util;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import javax.enterprise.inject.Produces;
@@ -28,9 +30,14 @@ public class Resources {
 	@Produces
     @PersistenceContext
     private EntityManager em;
-
+	
     @Produces
     public Logger produceLog(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
     }
+    
+    public static String getMessage(String key,Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", locale);
+		return resourceBundle.getString(key);
+	}
 }

@@ -53,7 +53,6 @@ public class Client implements Serializable{
 	@OneToMany(mappedBy="client")
 	private List<ServiceOrder> ordemServicos;
 	
-	@NotNull
 	@OneToMany(mappedBy="client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Phone> phones;
 	

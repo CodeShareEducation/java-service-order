@@ -3,6 +3,7 @@ package br.com.codeshare.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +20,7 @@ import br.com.codeshare.model.Phone;
 import br.com.codeshare.qualifiers.SessionMap;
 import br.com.codeshare.service.ClientService;
 import br.com.codeshare.service.PhoneService;
-import br.com.codeshare.util.WebResources;
+import br.com.codeshare.util.Resources;
 
 @Named
 @ConversationScoped
@@ -31,6 +32,8 @@ public class ClientController implements Serializable {
 	private FacesContext facesContext;
 	@Inject @SessionMap
 	private Map<String, Object> sessionMap;
+	@Inject
+	private Locale locale;
 	@Inject
 	private ClientService clientService;
 
@@ -67,11 +70,11 @@ public class ClientController implements Serializable {
 	public String save() throws Exception {
 		try {
 			clientService.save(newClient);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"),WebResources.getMessage("sucess_register")));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Resources.getMessage("register",locale),Resources.getMessage("sucess_register",locale)));
 			initNewClient();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,errorMessage,WebResources.getMessage("unsuccessful"));
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,errorMessage,Resources.getMessage("unsuccessful",locale));
 			facesContext.addMessage(null, m);
 		}
 		if(!conversation.isTransient()){
@@ -83,11 +86,11 @@ public class ClientController implements Serializable {
 	public String update(Client client) throws Exception{
 		try {
 			clientService.update(client,phoneToBeRemove);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  WebResources.getMessage("register"),WebResources.getMessage("sucess_register")));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  Resources.getMessage("register",locale),Resources.getMessage("sucess_register",locale)));
 			initNewClient();
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, WebResources.getMessage("unsuccessful"));
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, Resources.getMessage("unsuccessful",locale));
 			facesContext.addMessage(null, m);
 			initNewClient();
 		}
