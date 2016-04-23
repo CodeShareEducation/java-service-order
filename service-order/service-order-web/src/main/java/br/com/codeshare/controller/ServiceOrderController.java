@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -22,7 +21,7 @@ import br.com.codeshare.model.ServiceOrder;
 import br.com.codeshare.qualifiers.SessionMap;
 import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.service.ServiceOrderService;
-import br.com.codeshare.util.Resources;
+import br.com.codeshare.util.WebResources;
 
 @Named
 @ViewScoped
@@ -32,8 +31,6 @@ public class ServiceOrderController implements Serializable{
 
 	@Inject
 	private FacesContext facesContext;
-	@Inject
-	private Locale locale;
 	@Inject @SessionMap
 	private Map<String, Object> sessionMap;
 	@Inject
@@ -63,7 +60,7 @@ public class ServiceOrderController implements Serializable{
 		try {
 			newServiceOrder.setDateSo(new Date());
 			serviceOrderService.register(newServiceOrder);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Resources.getMessage("register",locale), Resources.getMessage("sucess_register",locale)));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"), WebResources.getMessage("sucess_register")));
 			initNewServiceOrder();
 			
 			/*if(!conversation.isTransient()){
@@ -71,7 +68,7 @@ public class ServiceOrderController implements Serializable{
 			}*/
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, Resources.getMessage("unsuccessful",locale));
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, WebResources.getMessage("unsuccessful"));
 			facesContext.addMessage(null, m);
 		}
 	}
@@ -79,7 +76,7 @@ public class ServiceOrderController implements Serializable{
 	public String update(ServiceOrder so) throws Exception {
 		try {
 			serviceOrderService.update(so);
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Resources.getMessage("register",locale), Resources.getMessage("sucess_register",locale)));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"), WebResources.getMessage("sucess_register")));
 			initNewServiceOrder();
 			
 			/*if(!conversation.isTransient()){
@@ -87,7 +84,7 @@ public class ServiceOrderController implements Serializable{
 			}*/
 		} catch (Exception e) {
 			String errorMessage = getRootErrorMessage(e);
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, Resources.getMessage("unsuccessful",locale));
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, WebResources.getMessage("unsuccessful"));
 			facesContext.addMessage(null, m);
 		}
 		

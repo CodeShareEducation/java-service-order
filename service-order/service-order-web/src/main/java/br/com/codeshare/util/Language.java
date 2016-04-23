@@ -16,7 +16,7 @@ public class Language implements Serializable {
 
 	@Inject
 	private FacesContext facesContext;
-
+	
 	private String localeCode;
 	
 	public String getLocaleCode() {
