@@ -34,19 +34,19 @@ public class Client implements Serializable{
 	@Column(name="client_id")
 	private Long id;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull(message="{name.notempty}")
+	@NotEmpty(message="{name.notempty}")
 	private String name;
 	
 	private String adress;
 	
-	@NotEmpty
-	@NotNull
-	@Size(min=13,max=14)
+	@NotEmpty(message="{homephone.notempty}")
+	@NotNull(message="{homephone.notempty}")
+	@Size(min=13,max=14, message="{homephone.size}")
 	@Column(name="home_phone")
 	private String homePhone;
 	
-	@Size(min=13,max=14)
+	@Size(min=13,max=14,message="{businessphone.size}")
 	@Column(name="business_phone")
 	private String bisenessPhone;
 	
