@@ -36,8 +36,8 @@ public class ServiceOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OS")
 	private Long id;
 	
-	@NotNull
-	@NotEmpty
+	@NotNull(message="{reportedProblem.notempty}")
+	@NotEmpty(message="{reportedProblem.notempty}")
 	private String reportedProblem;
 	
 	private String problemFound;
@@ -59,15 +59,15 @@ public class ServiceOrder implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date datePhoneWithdrawl;
 	
-	@NotNull
+	@NotNull(message="{value.notempty}")
 	private BigDecimal value;
 	
-	@NotNull
+	@NotNull(message="{client.notempty}")
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;
 	
-	@NotNull
+	@NotNull(message="{phone.notempty}")
 	@ManyToOne
 	@JoinColumn(name="phone_id")
 	private Phone phone;

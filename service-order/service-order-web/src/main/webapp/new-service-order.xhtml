@@ -16,7 +16,7 @@
 					<p:selectOneMenu id="client" value="#{newServiceOrder.client}" converter="#{clientConverter}" 
 						effect="fade" var="c" filter="true" filterMatchMode="startsWith">
 						<p:ajax listener="#{serviceOrderController.onClientChange}" update="phone" />
-						<f:selectItem itemLabel="Escolha um cliente"/>
+						<f:selectItem itemLabel="#{label['new-serviceorder.client.label']}"/>
 						<f:selectItems value="#{clients}" var="client" itemLabel="#{client.name}" itemValue="#{client}"/>
 						<p:column>
 							<h:outputText value="#{c.name}" />
@@ -25,7 +25,7 @@
 					
 					<p:outputLabel for="phone" value="#{label['new-serviceorder.phone']}" />
 					<p:selectOneMenu id="phone" value="#{newServiceOrder.phone}" converter="#{phoneConverter}" disabled="#{newServiceOrder.client == null}">
-						<f:selectItem itemLabel="Escolha um telefone"/>
+						<f:selectItem itemLabel="#{label['new-serviceorder.phone.label']}"/>
 						<f:selectItems value="#{serviceOrderController.phones}" var="phone" itemLabel="#{phone.model}" itemValue="#{phone}" />
 					</p:selectOneMenu>
 					<p:outputLabel for="osType" value="#{label['new-serviceorder.ostype']}" />
