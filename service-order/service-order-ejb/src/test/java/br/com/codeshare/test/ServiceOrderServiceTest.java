@@ -19,22 +19,13 @@ import org.junit.runner.RunWith;
 import br.com.codeshare.builder.ClientBuilder;
 import br.com.codeshare.builder.PhoneBuilder;
 import br.com.codeshare.builder.ServiceOrderBuild;
-import br.com.codeshare.data.AbstractRepository;
-import br.com.codeshare.data.ClientRepository;
-import br.com.codeshare.data.PhoneRepository;
-import br.com.codeshare.data.Repository;
-import br.com.codeshare.data.ServiceOrderRepository;
-import br.com.codeshare.enums.PhoneState;
 import br.com.codeshare.enums.ServiceOrderState;
-import br.com.codeshare.enums.ServiceOrderType;
-import br.com.codeshare.exception.BusinessException;
 import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.model.ServiceOrder;
 import br.com.codeshare.service.ClientService;
 import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.service.ServiceOrderService;
-import br.com.codeshare.util.Resources;
 
 @RunWith(Arquillian.class)
 public class ServiceOrderServiceTest {
@@ -42,10 +33,13 @@ public class ServiceOrderServiceTest {
 	@Deployment
 	public static Archive<?> createTestArchive(){
 		return ShrinkWrap.create(WebArchive.class,"test.war")
-				.addClasses(ServiceOrder.class,ServiceOrderService.class,ServiceOrderRepository.class,Resources.class,Client.class,Phone.class,
-						AbstractRepository.class,Repository.class,PhoneState.class,ServiceOrderType.class,ServiceOrderState.class,ClientBuilder.class,
-						PhoneBuilder.class,ServiceOrderBuild.class,ClientService.class,BusinessException.class,ClientRepository.class,PhoneService.class,
-						PhoneRepository.class)
+				.addPackage(PackageUtil.MODEL.getPackageName())
+				.addPackage(PackageUtil.SERVICE.getPackageName())
+				.addPackage(PackageUtil.DATA.getPackageName())
+				.addPackage(PackageUtil.UTIL.getPackageName())
+				.addPackage(PackageUtil.ENUMS.getPackageName())
+				.addPackage(PackageUtil.BUILDER.getPackageName())
+				.addPackage(PackageUtil.EXCEPTION.getPackageName())
 				.addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
 				.addAsWebInfResource(EmptyAsset.INSTANCE,"beans.xml")
 				.addAsWebInfResource("test-ds.xml", "test-ds.xml");
@@ -64,19 +58,77 @@ public class ServiceOrderServiceTest {
 	Logger log;
 	
 	@Test
-	public void testRegister() throws Exception{
+	public void testRegister(){
+		
+		Phone phone = getPhone();
+		Client client = getClient(phone);
+		ServiceOrder so = getSO(client, phone);
+		
+		try {
+			clientService.save(client);
+			service.register(so);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Assert.assertNotNull(so.getId());
+		log.info(so.getClient().getName() + "\'s service order was persisted with id " + so.getId());
+	}
+	
+	@Test
+	public void testUpdate(){
+		Phone phone = getPhone();
+		Client client = getClient(phone);
+		ServiceOrder so = getSO(client, phone);
+		
+		try{
+			clientService.save(client);
+			service.register(so);
+			
+			so.setValue(new BigDecimal(1000));
+			so.setSoState(ServiceOrderState.APPROVED);
+			
+			service.update(so);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		ServiceOrder soUpdated = service.find(so.getId());
+		
+		Assert.assertEquals(new BigDecimal("1000.00"), soUpdated.getValue());
+		Assert.assertEquals(ServiceOrderState.APPROVED, soUpdated.getSoState());
+		log.info(so.getClient().getName() + "\'s service order with id " + so.getId() + " was updated");
+	}
+	
+	private Phone getPhone(){
 		Phone phone = new PhoneBuilder()
 				.withBrand("Samsung")
 				.withModel("Galaxy S6")
 				.buid();
 		
+		return phone;
+	}
+	
+	private Client getClient(Phone...phones){
 		Client client = new ClientBuilder()
 				.withName("John Mc.Queide")
 				.withAdress("Quadra 101 Conjunto 07 Casa 07")
 				.withHomePhone("(61) 1234-9812")
-				.withPhone(Arrays.asList(phone))
+				.withPhone(Arrays.asList(phones))
 				.build();
-		
+		return client;
+	}
+	
+	private Client getClient(){
+		Client client = new ClientBuilder()
+				.withName("John Mc.Queide")
+				.withAdress("Quadra 101 Conjunto 07 Casa 07")
+				.withHomePhone("(61) 1234-9812")
+				.build();
+		return client;
+	}
+	
+	private ServiceOrder getSO(Client client,Phone phone){
 		ServiceOrder serviceOrder = new ServiceOrderBuild()
 				.withReportedProblem("Don't work")
 				.withValue(new BigDecimal(500))
@@ -84,12 +136,7 @@ public class ServiceOrderServiceTest {
 				.withPhone(phone)
 				.build();
 		
-		clientService.save(client);
-		
-		service.register(serviceOrder);
-		
-		Assert.assertNotNull(serviceOrder.getId());
-		log.info(serviceOrder.getClient().getName() + "\'s service order was persisted with id " + serviceOrder.getId());
+		return serviceOrder;
 	}
 	
 }
