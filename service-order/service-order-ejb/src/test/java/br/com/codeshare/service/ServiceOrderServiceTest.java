@@ -1,4 +1,4 @@
-package br.com.codeshare.test;
+package br.com.codeshare.service;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -13,6 +13,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,6 +27,7 @@ import br.com.codeshare.model.ServiceOrder;
 import br.com.codeshare.service.ClientService;
 import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.service.ServiceOrderService;
+import br.com.codeshare.util.PackageUtil;
 
 @RunWith(Arquillian.class)
 public class ServiceOrderServiceTest {
