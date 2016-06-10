@@ -40,13 +40,9 @@ public class Client implements Serializable{
 	
 	private String adress;
 	
-	@NotEmpty(message="{homephone.notempty}")
-	@NotNull(message="{homephone.notempty}")
-	@Size(min=13,max=14, message="{homephone.size}")
 	@Column(name="home_phone")
 	private String homePhone;
 	
-	@Size(min=13,max=14,message="{businessphone.size}")
 	@Column(name="business_phone")
 	private String bisenessPhone;
 	
