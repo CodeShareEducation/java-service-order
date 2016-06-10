@@ -39,7 +39,7 @@ public class ClientService{
 				throw new BusinessException(ErrorCode.LENGTH_MUST_BE_BETWEEN_13_14.getErrorCode());
 			}
 		}
-		else if(!client.getBisenessPhone().isEmpty()){
+		if(!client.getBisenessPhone().isEmpty()){
 			if(client.getBisenessPhone().length() < 13 || client.getBisenessPhone().length() >14){
 				throw new BusinessException(ErrorCode.LENGTH_MUST_BE_BETWEEN_13_14.getErrorCode());
 			}
