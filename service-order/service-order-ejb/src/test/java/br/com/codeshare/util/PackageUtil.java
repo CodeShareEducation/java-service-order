@@ -1,4 +1,4 @@
-package br.com.codeshare.test;
+package br.com.codeshare.util;
 
 public enum PackageUtil {
 
