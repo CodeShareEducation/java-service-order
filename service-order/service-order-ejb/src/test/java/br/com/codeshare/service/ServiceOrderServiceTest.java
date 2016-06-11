@@ -13,7 +13,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,9 +23,6 @@ import br.com.codeshare.enums.ServiceOrderState;
 import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.model.ServiceOrder;
-import br.com.codeshare.service.ClientService;
-import br.com.codeshare.service.PhoneService;
-import br.com.codeshare.service.ServiceOrderService;
 import br.com.codeshare.util.PackageUtil;
 
 @RunWith(Arquillian.class)
@@ -121,6 +117,7 @@ public class ServiceOrderServiceTest {
 		return client;
 	}
 	
+	@SuppressWarnings("unused")
 	private Client getClient(){
 		Client client = new ClientBuilder()
 				.withName("John Mc.Queide")

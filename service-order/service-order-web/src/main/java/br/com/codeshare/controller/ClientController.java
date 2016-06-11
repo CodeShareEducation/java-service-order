@@ -13,9 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.Validator;
 
-import br.com.codeshare.enums.ErrorCode;
 import br.com.codeshare.exception.BusinessException;
 import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
@@ -54,9 +52,6 @@ public class ClientController implements Serializable {
 	private Client clientSelected;
 	private List<Phone> phoneToBeRemove;
 	
-	@Inject
-	private Validator validator;
-
 	@Produces
 	@Named
 	public Client getNewClient() {
