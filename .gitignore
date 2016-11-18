@@ -1,4 +1,5 @@
-service-order/.settings/org.eclipse.m2e.core.prefs
+service-order/.project
+service-order/.settings/
 service-order/service-order-ear/.project
 service-order/service-order-ear/.settings/
 service-order/service-order-ear/target/
@@ -10,5 +11,14 @@ service-order/service-order-web/.classpath
 service-order/service-order-web/.project
 service-order/service-order-web/.settings/
 service-order/service-order-web/target/
-service-order/service-order-web/.tern-project
 service-order/service-order-web/src/main/webapp/WEB-INF/.faces-config.xml.jsfdia
+service-order/service-order-web/.tern-project
+service-order/service-order-angular/.classpath
+service-order/service-order-angular/.gitignore
+service-order/service-order-angular/.project
+service-order/service-order-angular/.settings/
+service-order/service-order-angular/.tern-project
+service-order/service-order-rest/.classpath
+service-order/service-order-rest/.gitignore
+service-order/service-order-rest/.project
+service-order/service-order-rest/.settings/
