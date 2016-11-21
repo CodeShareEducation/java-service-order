@@ -131,16 +131,16 @@ public class ClientController implements Serializable {
 		return errorMessage;
 	}
 
-	public void addClientPhone() {
+	public void addClientPhone(Client client) {
 		if(conversation.isTransient()){
 			conversation.begin();
 		}
 		
-		phoneController.getNewPhone().setClient(newClient);
-		if (newClient.getPhones() == null) {
-			newClient.setTelefones(new ArrayList<Phone>());
+		phoneController.getNewPhone().setClient(client);
+		if (client.getPhones() == null) {
+			client.setTelefones(new ArrayList<Phone>());
 		}
-		newClient.getPhones().add(phoneController.getNewPhone());
+		client.getPhones().add(phoneController.getNewPhone());
 		phoneController.initNewPhone();
 	}
 	
@@ -160,19 +160,6 @@ public class ClientController implements Serializable {
 			phoneToBeRemove = new ArrayList<Phone>();
 		}
 		phoneToBeRemove.add(phone);
-	}
-	
-	public void addClientPhoneOnUpdate() {
-		if(conversation.isTransient()){
-			conversation.begin();
-		}
-		
-		phoneController.getNewPhone().setClient(clientSelected);
-		if (clientSelected.getPhones() == null) {
-			clientSelected.setTelefones(new ArrayList<Phone>());
-		}
-		clientSelected.getPhones().add(phoneController.getNewPhone());
-		phoneController.initNewPhone();
 	}
 	
 	public void searchByName() {

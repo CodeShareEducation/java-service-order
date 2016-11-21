@@ -58,7 +58,7 @@
 					<p:outputLabel for="esn" value="#{label['phone.esn']}" />
 					<p:inputText id="esn" value="#{newPhone.esn}" />
 				</p:panelGrid>
-				<p:commandButton value="#{label['phone.add']}" action="#{clientController.addClientPhone}" update="phoneTable @form"/>
+				<p:commandButton value="#{label['phone.add']}" action="#{clientController.addClientPhone(newClient)}" update="phoneTable @form"/>
 				
 				<p:dataTable value="#{newClient.phones}" var="phone" emptyMessage="#{label['phone.notadd']}"
 					id="phoneTable">
