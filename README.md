@@ -5,7 +5,7 @@ Project to work with service orders from a cel phone store made with: Java, JSF,
 
 1. What do you need?
 
-  1. Jboss Wildfly 8.0.1
+  1. Jboss Wildfly 8.1.0.Final
   2. PostgreSQL 9.4
   3. JDK 1.7 +
 
@@ -21,4 +21,4 @@ Project to work with service orders from a cel phone store made with: Java, JSF,
 
 7. Start the server.
 
-8. Open the browser and acess the adress http://localhost:8080/service-order-web/
+8. Open the browser and acess the adress [link](http://localhost:8080/service-order-web/)

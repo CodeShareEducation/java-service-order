@@ -131,6 +131,9 @@ public class ClientController implements Serializable {
 	}
 
 	public void addClientPhone() {
+		if(conversation.isTransient()){
+			conversation.begin();
+		}
 		
 		phoneController.getNewPhone().setClient(newClient);
 		if (newClient.getPhones() == null) {
