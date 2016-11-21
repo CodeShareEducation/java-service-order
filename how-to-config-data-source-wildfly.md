@@ -16,6 +16,6 @@ After execute the `standalone.sh` to start the server. For the next step run the
 
 ![jboss-cli.sh](images/jboss-cli-sh.png)
 
-Now, to add postgres module in wildfly, download postgresql [driver](https://github.com/CodeShareEducation/java-service-order/raw/master/config/postgresql/main/postgresql-9.4-1206-jdbc41.jar) in one folder of your choice, and run this command, `module add --name=org.postgres --resources=/tmp/postgresql-9.4-1206-jdbc41.jar --dependencies=javax.api,javax.transaction.api`.
+Now, to add postgres module in wildfly, download postgresql [driver](https://github.com/CodeShareEducation/java-service-order/raw/master/config/postgresql-9.4-1206-jdbc41.jar) in one folder of your choice, and run this command, `module add --name=org.postgres --resources=/tmp/postgresql-9.4-1206-jdbc41.jar --dependencies=javax.api,javax.transaction.api`.
 
 Then we have to install the driver in the wildfly. `/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)`.
