@@ -3,7 +3,6 @@ package br.com.codeshare.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
@@ -18,7 +17,6 @@ import br.com.codeshare.enums.ErrorCode;
 import br.com.codeshare.exception.BusinessException;
 import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
-import br.com.codeshare.qualifiers.SessionMap;
 import br.com.codeshare.service.ClientService;
 import br.com.codeshare.service.PhoneService;
 import br.com.codeshare.util.WebResources;
@@ -31,8 +29,6 @@ public class ClientController implements Serializable {
 
 	@Inject
 	private FacesContext facesContext;
-	@Inject @SessionMap
-	private Map<String, Object> sessionMap;
 	@Inject
 	private ClientService clientService;
 
@@ -189,12 +185,12 @@ public class ClientController implements Serializable {
 		this.clientSelected = client;
 		List<Phone> phoneList = phoneService.findPhoneByClientId(clientSelected.getId());
 		clientSelected.setTelefones(phoneList);
-		sessionMap.put("client", client);
+		//sessionMap.put("client", client);
 		return "update_client";
 	}
 	
 	public Client getClientSelected() {
-		return (Client) sessionMap.get("client");
+		return clientSelected;
 	}
 	
 	public String getFilterName() {
