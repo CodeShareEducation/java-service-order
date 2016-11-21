@@ -62,6 +62,13 @@
 				
 				<p:dataTable value="#{newClient.phones}" var="phone" emptyMessage="#{label['phone.notadd']}"
 					id="phoneTable">
+					
+					<p:column headerText="" style="width:8%; text-align: center;">
+						<p:commandLink action="#{clientController.removeClientPhone(newClient,phone)}" immediate="true" update="phoneTable">
+							<i class="fa fa-times" />
+						</p:commandLink>
+					</p:column>
+					
 					<p:column headerText="#{label['phone.brand']}">
 						<p:outputLabel value="#{phone.brand}"/>
 					</p:column>

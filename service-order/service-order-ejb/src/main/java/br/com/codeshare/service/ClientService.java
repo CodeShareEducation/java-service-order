@@ -50,7 +50,9 @@ public class ClientService{
 		if(phonesToBeRemove != null){
 			for(Phone phone : phonesToBeRemove){
 				if(soService.findSoByPhoneId(phone.getId()).isEmpty()){
-					phoneService.remove(phone);
+					if(phone.getId()!=null){
+						phoneService.remove(phone);
+					}
 				}
 				else{
 					throw new BusinessException(ErrorCode.PHONE_HAS_SERVICE_ORDER.getErrorCode());

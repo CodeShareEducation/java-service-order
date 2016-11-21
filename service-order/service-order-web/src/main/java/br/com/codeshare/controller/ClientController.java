@@ -9,6 +9,7 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,6 +30,8 @@ public class ClientController implements Serializable {
 
 	@Inject
 	private FacesContext facesContext;
+	@Inject
+	private ExternalContext externalContext;
 	@Inject
 	private ClientService clientService;
 
@@ -59,7 +62,9 @@ public class ClientController implements Serializable {
 	public void initNewClient() {
 		newClient = new Client();
 		newClient.setTelefones(new ArrayList<Phone>());
-		listClients = clientService.findAll();
+		if(externalContext.getRequestServletPath().equals("/clients.jsf")){
+			listClients = clientService.findAll();
+		}
 	}
 	
 	public String save() throws Exception {
@@ -145,12 +150,12 @@ public class ClientController implements Serializable {
 		}
 	}
 	
-	public void removeClientPhone(Phone phone){
+	public void removeClientPhone(Client client, Phone phone){
 		if(conversation.isTransient()){
 			conversation.begin();
 		}
 		
-		clientSelected.getPhones().remove(phone);
+		client.getPhones().remove(phone);
 		if(phoneToBeRemove == null){
 			phoneToBeRemove = new ArrayList<Phone>();
 		}
@@ -185,7 +190,6 @@ public class ClientController implements Serializable {
 		this.clientSelected = client;
 		List<Phone> phoneList = phoneService.findPhoneByClientId(clientSelected.getId());
 		clientSelected.setTelefones(phoneList);
-		//sessionMap.put("client", client);
 		return "update_client";
 	}
 	
