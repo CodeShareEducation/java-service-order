@@ -1,5 +1,6 @@
 package br.com.codeshare.rest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,17 +17,22 @@ import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import br.com.codeshare.data.ClientRepository;
+import br.com.codeshare.data.PhoneRepository;
 import br.com.codeshare.enums.ErrorCode;
 import br.com.codeshare.exception.BusinessException;
 import br.com.codeshare.model.Client;
+import br.com.codeshare.model.Phone;
+import br.com.codeshare.service.ClientService;
 
 @Path("/client")
 @RequestScoped
@@ -40,6 +46,12 @@ public class ClientResourceRESTService {
 	
 	@Inject
 	private ClientRepository repository;
+	
+	@Inject
+	private ClientService service;
+	
+	@Inject
+	private PhoneRepository phoneRepository;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -75,21 +87,65 @@ public class ClientResourceRESTService {
 		return client;
 	}
 	
+	@GET
+	@Path("/{id:[0-9][0-9]*}/phones")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Phone> listClientPhones(@PathParam("id")Long id){
+		List<Phone> phones = phoneRepository.findByClientId(id);
+		
+		if(phones == null){
+			throw new WebApplicationException(Response.Status.NOT_FOUND);
+		}
+		
+		for (Phone phone : phones) {
+			phone.setOs(null);
+		}
+		
+		return phones;
+	}
+	
+	
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createClient(Client client){
 		
-		Response.ResponseBuilder builder = null;
+		ResponseBuilder builder = null;
 		
 		try{
+			for (Phone phone : client.getPhones()) {
+				phone.setClient(client);
+			}
+			
 			validateClient(client);
 			
-			repository.insert(client);
+			service.save(client);
 			
 			builder = Response.ok();
 		} catch (ConstraintViolationException ce) {
+            builder = createViolationResponse(ce.getConstraintViolations());
+        } catch (Exception e) {
+            Map<String, String> responseObj = new HashMap<String, String>();
+            responseObj.put("error", e.getMessage());
+            builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+        }
+		
+		return builder.build();
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateClient(Client client){
+		
+		ResponseBuilder builder = null;
+		
+		try{
+			service.update(client, new ArrayList<Phone>());
+			
+			builder = Response.ok();
+		}catch (ConstraintViolationException ce) {
             builder = createViolationResponse(ce.getConstraintViolations());
         } catch (Exception e) {
             Map<String, String> responseObj = new HashMap<String, String>();
