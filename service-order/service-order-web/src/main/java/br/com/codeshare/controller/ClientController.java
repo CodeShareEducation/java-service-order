@@ -69,8 +69,6 @@ public class ClientController implements Serializable {
 	
 	public String save() throws Exception {
 		try {
-			validatePhoneLeastOnePhoneObligatory(newClient);
-			
 			clientService.save(newClient);
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, WebResources.getMessage("register"),WebResources.getMessage("sucess_register")));
 			initNewClient();
@@ -90,8 +88,6 @@ public class ClientController implements Serializable {
 
 	public String update(Client client) throws Exception{
 		try {
-			validatePhoneLeastOnePhoneObligatory(client);
-			
 			clientService.update(client,phoneToBeRemove);
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  WebResources.getMessage("register"),WebResources.getMessage("sucess_register")));
 			initNewClient();
@@ -111,12 +107,6 @@ public class ClientController implements Serializable {
 		return "clients";
 	}
 	
-	private void validatePhoneLeastOnePhoneObligatory(Client client) throws BusinessException {
-		if(client.getHomePhone().isEmpty() && client.getBisenessPhone().isEmpty()){
-			throw new BusinessException(ErrorCode.LEAST_ONE_PHONE_OBLIGATORY.getErrorCode());
-		}
-	}
-
 	private String getRootErrorMessage(Exception e) {
 		String errorMessage = "Registration failed. See server log for more information";
 		if (e == null) {

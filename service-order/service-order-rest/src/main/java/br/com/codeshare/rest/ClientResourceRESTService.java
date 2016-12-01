@@ -109,25 +109,33 @@ public class ClientResourceRESTService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createClient(Client client){
-		
+	public Response createClient(Client client) {
+
 		ResponseBuilder builder = null;
-		
-		try{
-			for (Phone phone : client.getPhones()) {
-				phone.setClient(client);
+
+		try {
+			if (client.getPhones() != null) {
+				for (Phone phone : client.getPhones()) {
+					phone.setClient(client);
+				}
 			}
-			
+
 			validateClient(client);
-			
+
 			service.save(client);
-			
+
 			builder = Response.ok();
 		} catch (ConstraintViolationException ce) {
-            builder = createViolationResponse(ce.getConstraintViolations());
-        } catch (Exception e) {
+			builder = createViolationResponse(ce.getConstraintViolations());
+		}catch (BusinessException be) {
+			Map<String, String> responseObj = new HashMap<String, String>();
+			responseObj.put("error", be.getErrorCode());
+			be.printStackTrace();
+			builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
+		} catch (Exception e) {
             Map<String, String> responseObj = new HashMap<String, String>();
             responseObj.put("error", e.getMessage());
+            e.printStackTrace();
             builder = Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
         }
 		
@@ -164,12 +172,6 @@ public class ClientResourceRESTService {
 			throw new ConstraintViolationException(new HashSet<ConstraintViolation<?>>(violations));
 		}
 		
-		try {
-			validatePhoneLeastOnePhoneObligatory(client);
-		} catch (BusinessException e) {
-			throw new ValidationException(e.getErrorCode(), e);
-		}
-		
 	}
 	
 	private Response.ResponseBuilder createViolationResponse(Set<ConstraintViolation<?>> violations) {
@@ -183,11 +185,4 @@ public class ClientResourceRESTService {
 
         return Response.status(Response.Status.BAD_REQUEST).entity(responseObj);
     }
-	
-	private void validatePhoneLeastOnePhoneObligatory(Client client) throws BusinessException {
-		if(client.getHomePhone().isEmpty() && client.getBisenessPhone().isEmpty()){
-			throw new BusinessException(ErrorCode.LEAST_ONE_PHONE_OBLIGATORY.getErrorCode());
-		}
-	}
-	
 }
