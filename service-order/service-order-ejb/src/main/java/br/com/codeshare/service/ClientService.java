@@ -25,7 +25,9 @@ public class ClientService{
 	private ServiceOrderService soService;
 	
 	public void save(Client client) throws Exception{
-		
+
+		validatePhoneLeastOnePhoneObligatory(client);
+
 		clientRepository.insert(client);
 		clientEventSrc.fire(client);
 	}
@@ -44,7 +46,9 @@ public class ClientService{
 	}
 
 	public void update(Client client,List<Phone>phonesToBeRemove) throws Exception {
-		
+
+		validatePhoneLeastOnePhoneObligatory(client);
+
 		clientRepository.update(client);
 		
 		if(phonesToBeRemove != null){
@@ -65,6 +69,12 @@ public class ClientService{
 	
 	public void removePhoneCliente(Client client, Phone phone){
 		clientRepository.removePhoneClient(client, phone);
+	}
+
+	private void validatePhoneLeastOnePhoneObligatory(Client client) throws BusinessException {
+		if(client.getHomePhone().isEmpty() && client.getBisenessPhone().isEmpty()){
+			throw new BusinessException(ErrorCode.LEAST_ONE_PHONE_OBLIGATORY.getErrorCode());
+		}
 	}
 	
 }
