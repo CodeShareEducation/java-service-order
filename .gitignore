@@ -22,3 +22,4 @@ service-order/service-order-rest/.classpath
 service-order/service-order-rest/.gitignore
 service-order/service-order-rest/.project
 service-order/service-order-rest/.settings/
+service-order/service-order-rest/target/
