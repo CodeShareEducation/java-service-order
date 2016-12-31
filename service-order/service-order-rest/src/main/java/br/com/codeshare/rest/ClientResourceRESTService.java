@@ -1,6 +1,5 @@
 package br.com.codeshare.rest;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +11,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -28,11 +26,11 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import br.com.codeshare.data.ClientRepository;
 import br.com.codeshare.data.PhoneRepository;
-import br.com.codeshare.enums.ErrorCode;
 import br.com.codeshare.exception.BusinessException;
 import br.com.codeshare.model.Client;
 import br.com.codeshare.model.Phone;
 import br.com.codeshare.service.ClientService;
+import br.com.codeshare.vo.ClientPhoneUpdateVO;
 
 @Path("/client")
 @RequestScoped
@@ -65,8 +63,8 @@ public class ClientResourceRESTService {
 		}
 
 		for (Client client : clients) {
-			client.setOrdemServicos(null);
-			client.setTelefones(null);
+			client.setServiceOrders(null);
+			client.setPhones(null);
 		}
 		
 		return clients; 
@@ -75,15 +73,20 @@ public class ClientResourceRESTService {
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Client lookupClientById(@PathParam("id") Long id){
-		Client client = repository.findById(id);
+	public Client retrieveClientById(@PathParam("id") Long id){
+		Client client = repository.findClientById(id);
 		
 		if(client == null){
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
 		
-		client.setOrdemServicos(null);
-		client.setTelefones(null);
+		client.setServiceOrders(null);
+
+		for(Phone phone : client.getPhones()){
+		    phone.setOs(null);
+		    phone.setClient(null);
+        }
+
 		return client;
 	}
 	
@@ -145,12 +148,18 @@ public class ClientResourceRESTService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateClient(Client client){
+	@Path("/{id:[0-9][0-9]*}")
+	public Response updateClient(ClientPhoneUpdateVO clientPhoneVO){
 		
 		ResponseBuilder builder = null;
 		
 		try{
-			service.update(client, new ArrayList<Phone>());
+			if (clientPhoneVO.getClient().getPhones() != null) {
+				for (Phone phone : clientPhoneVO.getClient().getPhones()) {
+					phone.setClient(clientPhoneVO.getClient());
+				}
+			}
+			service.update(clientPhoneVO.getClient(), clientPhoneVO.getPhonesToBeRemoved());
 			
 			builder = Response.ok();
 		}catch (ConstraintViolationException ce) {
